@@ -86,7 +86,7 @@
 @section('auth_footer')
     @if($register_url)
         <p class="my-0">
-            <a href="{{ $register_url }}">
+            <a href="{{config('app.url')}}/login/google">
                 {{ __('Login with google account') }}
             </a>
         </p>

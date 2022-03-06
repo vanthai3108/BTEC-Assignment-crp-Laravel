@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Auth::routes(['register' => false, 'reset' => false]);
+Route::get('/login/{provider}', 'LoginBySocialController@loginSocial')->name('login_social');
+Route::get('/login/{provider}/process', 'LoginBySocialController@loginSocialHandle')->name('login_social_handle');
 
 Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => ['auth']], function(){
     Route::get('home', 'Admin\HomeController@index')->name('index');
