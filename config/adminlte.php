@@ -46,6 +46,7 @@ return [
     */
 
     'logo' => 'BLMS',
+    'logo_name' => 'Learning Management System',
     'logo_img' => 'vendor/adminlte/dist/img/btec2.png',
     'logo_img_icon' => 'vendor/adminlte/dist/img/btec.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',

@@ -1,6 +1,7 @@
 @extends('adminlte::auth.auth-page', ['auth_type' => 'login'])
 
 @section('adminlte_css_pre')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link rel="stylesheet" href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 @stop
 
@@ -74,7 +75,7 @@
 
             <div class="col-5">
                 <button type=submit class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
-                    <span class="fas fa-sign-in-alt"></span>
+                    <i class="fa-brands fa-facebook"></i>
                     {{ __('adminlte::adminlte.sign_in') }}
                 </button>
             </div>
@@ -85,8 +86,9 @@
 
 @section('auth_footer')
     @if($register_url)
-        <p class="my-0">
+        <p class="my-0" style="text-align: center">
             <a href="{{config('app.url')}}/login/google">
+                <i class="fa-brands fa-lg fa-google"></i>
                 {{ __('Login with google account') }}
             </a>
         </p>

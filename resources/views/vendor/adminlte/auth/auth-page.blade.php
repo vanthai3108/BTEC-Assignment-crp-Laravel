@@ -27,7 +27,7 @@
     </div>
         <div class="{{ $auth_type ?? 'login' }}-logo">
             <a href="{{ $dashboard_url }}">
-                <b>{!! config('adminlte.logo', 'Learning Management System') !!}</b>
+                <b>{!! config('adminlte.logo_name', 'Learning Management System') !!}</b>
             </a>
         </div>
     <div class="{{ $auth_type ?? 'login' }}-box">

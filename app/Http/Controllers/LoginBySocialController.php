@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AppConst;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -40,7 +40,7 @@ class LoginBySocialController extends Controller
                     'email' => $user->email,
                     'name' => $user->name,
                     'code' => $emailArr[0],
-                    'password' => 'afasfsa',
+                    'password' => Str::random(50),
                     'avatar' => $user->avatar,
                     'role_id' => AppConst::ROLE_TRAINEE,
                     'google_id' => $user->id

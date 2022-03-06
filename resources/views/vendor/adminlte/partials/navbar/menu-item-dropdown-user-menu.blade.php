@@ -19,9 +19,15 @@
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
         @if(config('adminlte.usermenu_image'))
             @if(Auth::user()->adminlte_image())
-                <img src="{{config('app.url')}}/{{ Auth::user()->adminlte_image() }}"
-                    class="user-image img-circle elevation-2"
-                    alt="{{ Auth::user()->name }}">
+                @if(str_starts_with(Auth::user()->adminlte_image(), "https://"))
+                    <img src="{{ Auth::user()->adminlte_image() }}"
+                        class="user-image img-circle elevation-2"
+                        alt="{{ Auth::user()->name }}">
+                @else
+                    <img src="{{config('app.url')}}/{{ Auth::user()->adminlte_image() }}"
+                        class="user-image img-circle elevation-2"
+                        alt="{{ Auth::user()->name }}">
+                @endif    
             @else
             {{ Auth::user()->name }}
             @endif
