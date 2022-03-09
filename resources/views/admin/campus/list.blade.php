@@ -8,13 +8,13 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title"><a href="{{ route('admin.campuses.create') }}" class="text-green"><i class="fas fa-plus text-green"></i> Create new campus</a></h3>
+            <h3 class="card-title"><a href="{{ route('admin.campuses.create') }}" class="text-info"><i class="fas fa-plus text-info"></i> Create new campus</a></h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
             <table class="table table-bordered table-hover">
                 <thead>
-                    <tr>
+                    <tr style="background-color: #17a2b8;">
                         <th class="text-center">#</th>
                         <th class="text-center">Name</th>
                         <th colspan="2" class="text-center">Action</th>

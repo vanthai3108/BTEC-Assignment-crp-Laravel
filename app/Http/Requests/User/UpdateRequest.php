@@ -13,7 +13,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -27,4 +27,15 @@ class UpdateRequest extends FormRequest
             //
         ];
     }
+
+    protected function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if ($validator->errors()->count() > 0) {
+                $validator->errors()->add('msg', __('message.user.update_failed'));
+            }
+        });
+    }
+
+
 }

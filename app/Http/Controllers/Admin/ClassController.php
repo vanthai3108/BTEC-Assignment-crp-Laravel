@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Classs\UpdateRequest;
+use App\Http\Requests\Classs\StoreRequest;
 use App\Models\Classs;
 use Illuminate\Http\Request;
 
@@ -34,7 +36,7 @@ class ClassController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         //
     }
@@ -68,7 +70,7 @@ class ClassController extends Controller
      * @param  \App\Models\Classs  $classs
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Classs $classs)
+    public function update(UpdateRequest $request, Classs $classs)
     {
         //
     }

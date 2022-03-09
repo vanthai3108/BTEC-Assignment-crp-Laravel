@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Semester\StoreRequest;
+use App\Http\Requests\Semester\UpdateRequest;
 use App\Models\Semester;
 use Illuminate\Http\Request;
 
@@ -34,7 +36,7 @@ class SemesterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         //
     }
@@ -68,7 +70,7 @@ class SemesterController extends Controller
      * @param  \App\Models\Semester  $semester
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Semester $semester)
+    public function update(UpdateRequest $request, Semester $semester)
     {
         //
     }
