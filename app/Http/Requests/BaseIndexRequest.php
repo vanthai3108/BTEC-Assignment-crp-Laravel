@@ -34,7 +34,16 @@ class BaseIndexRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'min:5']
         ];
+    }
+
+    protected function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if ($validator->errors()->count() > 0) {
+                $validator->errors()->add('msg', __('message.class.add_failed'));
+            }
+        });
     }
 }

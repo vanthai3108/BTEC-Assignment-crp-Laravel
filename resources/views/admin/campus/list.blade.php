@@ -14,7 +14,7 @@
         <div class="card-body">
             <table class="table table-bordered table-hover">
                 <thead>
-                    <tr style="background-color: #17a2b8;">
+                    <tr style="background-color:#00a4c5e0;">
                         <th class="text-center">#</th>
                         <th class="text-center">Name</th>
                         <th colspan="2" class="text-center">Action</th>
