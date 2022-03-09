@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Subject\StoreRequest;
+use App\Http\Requests\Subject\UpdateRequest;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 
@@ -34,7 +36,7 @@ class SubjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         //
     }
@@ -68,7 +70,7 @@ class SubjectController extends Controller
      * @param  \App\Models\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Subject $subject)
+    public function update(UpdateRequest $request, Subject $subject)
     {
         //
     }

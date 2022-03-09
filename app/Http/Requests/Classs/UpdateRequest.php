@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Class;
+namespace App\Http\Requests\Classs;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,7 +13,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,16 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'min:5']
         ];
+    }
+
+    protected function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if ($validator->errors()->count() > 0) {
+                $validator->errors()->add('msg', __('message.class.update_failed'));
+            }
+        });
     }
 }

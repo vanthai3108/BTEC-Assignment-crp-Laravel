@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Profile\StoreRequest;
+use App\Http\Requests\Profile\UpdateRequest;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 
@@ -34,7 +36,7 @@ class ProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         //
     }
@@ -68,7 +70,7 @@ class ProfileController extends Controller
      * @param  \App\Models\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Profile $profile)
+    public function update(UpdateRequest $request, Profile $profile)
     {
         //
     }

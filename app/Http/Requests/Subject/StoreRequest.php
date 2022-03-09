@@ -13,7 +13,7 @@ class StoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,5 +26,14 @@ class StoreRequest extends FormRequest
         return [
             //
         ];
+    }
+
+    protected function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if ($validator->errors()->count() > 0) {
+                $validator->errors()->add('msg', __('message.subject.add_failed'));
+            }
+        });
     }
 }
