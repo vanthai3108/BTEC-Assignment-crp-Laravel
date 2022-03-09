@@ -16,6 +16,16 @@ class StoreRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation()
+    {
+        $this->limit ? '' :
+        $this->merge(
+            [
+                'limit' => config('common.paginate.limit')
+            ]
+        );
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
