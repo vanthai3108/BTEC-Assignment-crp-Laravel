@@ -34,7 +34,8 @@ class BaseIndexRequest extends FormRequest
     public function rules()
     {
         return [
-            'limit' => ['integer', 'min:2']
+            'limit' => ['integer', 'min:2'],
+            'page' => ['integer', 'min:1']
         ];
     }
 

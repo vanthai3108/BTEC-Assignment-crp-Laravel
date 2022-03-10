@@ -27,10 +27,10 @@
                             <td class="align-middle">{{ $campus->name }}</td>
                             <td class="text-center align-middle"><a href="{{ route('admin.campuses.edit', $campus->id) }}"><i class="fas fa-edit text-blue"></i></a></td>
                             <td class="align-middle">
-                                <form id="deleteAction" action="{{ route('admin.campuses.destroy',$campus->id) }}" method="POST">
+                                <form id="deleteElement-{{$campus->id}}" action="{{ route('admin.campuses.destroy',$campus->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" onClick="deleteAction(event)" class="btn btn-block"><i class="fas fa-trash text-red"></i></button>
+                                    <button type="submit" onClick="deleteAction(event, {{ $campus->id }})" class="btn btn-block"><i class="fas fa-trash text-red"></i></button>
                                 </form>
                             </td>
                         </tr>
