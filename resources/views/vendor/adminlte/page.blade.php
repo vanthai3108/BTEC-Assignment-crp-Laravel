@@ -50,7 +50,7 @@
     @stack('js')
     @yield('js')
     <script>
-        function deleteAction(e) {
+        function deleteAction(e, id) {
             e.preventDefault();
             Swal.fire({
                 title: 'Are you sure?',
@@ -63,7 +63,7 @@
             }).then((result) => {
                 console.log(result);
                 if (result.value) {
-                    document.getElementById("deleteAction").submit();
+                    document.getElementById("deleteElement-"+id).submit();
                 }
             })
         }
