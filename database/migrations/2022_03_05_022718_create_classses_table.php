@@ -16,6 +16,7 @@ class CreateClasssesTable extends Migration
         Schema::create('classses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->boolean('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

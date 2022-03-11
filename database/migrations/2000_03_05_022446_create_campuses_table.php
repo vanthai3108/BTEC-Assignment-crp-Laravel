@@ -16,6 +16,7 @@ class CreateCampusesTable extends Migration
         Schema::create('campuses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->boolean('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

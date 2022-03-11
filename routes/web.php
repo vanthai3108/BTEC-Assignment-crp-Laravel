@@ -22,6 +22,8 @@ Route::get('/login/{provider}/process', 'LoginBySocialController@loginSocialHand
 Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => ['auth']], function(){
     Route::get('home', 'Admin\HomeController@index')->name('index');
     Route::resource('/campuses', 'Admin\CampusController');
+    Route::get('/users/block/{user}', 'Admin\UserController@blockUser')->name('users.block');
+    Route::get('/users/unblock/{user}', 'Admin\UserController@unblockUser')->name('users.unblock');
     Route::resource('/users', 'Admin\UserController');
     Route::resource('/categories', 'Admin\CategoryController');
     Route::resource('/subjects', 'Admin\SubjectController');

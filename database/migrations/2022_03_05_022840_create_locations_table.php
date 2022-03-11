@@ -17,6 +17,7 @@ class CreateLocationsTable extends Migration
             $table->id();
             $table->string('room');
             $table->string('building');
+            $table->boolean('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -53,4 +53,14 @@ class User extends Authenticatable
     {
         return $this->avatar;
     }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function campus()
+    {
+        return $this->belongsTo(Campus::class);
+    }
 }

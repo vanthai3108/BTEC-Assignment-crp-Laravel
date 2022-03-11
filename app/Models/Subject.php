@@ -15,5 +15,6 @@ class Subject extends Model
         'code',
         'sessions',
         'category_id',
+        'status',
     ];
 }

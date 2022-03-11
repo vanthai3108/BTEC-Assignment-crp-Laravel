@@ -57,6 +57,7 @@ class UserSeeder extends Seeder
             'name' => 'Nguyên Thái Phượng Ngân',
             'code' => 'nganntp',
             'avatar' => 'storage/avatars/avatar.png',
+            'status' => 0,
             'role_id' => 2,
             'campus_id' => 1
         ]);
@@ -112,6 +113,7 @@ class UserSeeder extends Seeder
             'code' => 'huyennt',
             'avatar' => 'storage/avatars/avatar.png',
             'role_id' => 3,
+            'status' => 0,
             'campus_id' => 1
         ]);
         User::create([
@@ -139,6 +141,7 @@ class UserSeeder extends Seeder
             'code' => 'hungpv',
             'avatar' => 'storage/avatars/avatar.png',
             'role_id' => 3,
+            'status' => 0,
             'campus_id' => 1
         ]);
         User::create([
@@ -166,6 +169,7 @@ class UserSeeder extends Seeder
             'code' => 'minhvt',
             'avatar' => 'storage/avatars/avatar.png',
             'role_id' => 3,
+            'status' => 0,
             'campus_id' => 1
         ]);
         

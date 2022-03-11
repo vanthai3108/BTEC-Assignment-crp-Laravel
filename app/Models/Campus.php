@@ -11,6 +11,7 @@ class Campus extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name'
+        'name',
+        'status',
     ];
 }

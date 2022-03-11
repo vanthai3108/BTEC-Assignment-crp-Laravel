@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BaseIndexRequest;
 use App\Http\Requests\Subject\StoreRequest;
 use App\Http\Requests\Subject\UpdateRequest;
 use App\Models\Subject;
@@ -15,7 +16,7 @@ class SubjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(BaseIndexRequest $request)
     {
         //
     }

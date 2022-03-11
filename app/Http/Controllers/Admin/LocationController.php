@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BaseIndexRequest;
 use App\Http\Requests\Location\StoreRequest;
 use App\Http\Requests\Location\UpdateRequest;
 use App\Models\Location;
@@ -15,7 +16,7 @@ class LocationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(BaseIndexRequest $request)
     {
         //
     }

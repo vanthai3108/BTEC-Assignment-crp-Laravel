@@ -29,6 +29,28 @@
                                     </div>
                                 @endif
                             </div>
+                            <div class="form-group">
+                                <label for="status">Status:</label>
+                                <select class="form-control" id="status" name="status">
+                                    <option value="1"
+                                        {{ old('status') != null ? (old('status') == 1 ? 'selected' : '') 
+                                        : ($campus->status == 1 ? 'selected' : '' )}}
+                                    >
+                                        Active
+                                    </option>
+                                    <option value="0"
+                                        {{ old('status') != null ? (old('status') == 0 ? 'selected' : '') 
+                                        : ($campus->status == 0 ? 'selected' : '' )}}
+                                    >
+                                        Disable
+                                    </option>
+                                </select>
+                                @if ($errors->has('status'))
+                                    <div class="invalid-feedback">
+                                        <strong>{{ $errors->first('status') }}</strong>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-info col col-12">Save</button>
