@@ -18,7 +18,8 @@ class ShiftController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        //
+        $shifts = Shift::paginate($request->limit);
+        return view('admin.shifts.list', compact('shifts'));
     }
 
     /**
@@ -28,7 +29,7 @@ class ShiftController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.shift.create');
     }
 
     /**
@@ -39,7 +40,11 @@ class ShiftController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        //
+        $shift = new Shift();
+        $shift->fill($request->all());
+        $shift->save();
+        return redirect()->route('admin.shifts.create')
+                            ->with('success', __('message.shift.add_success'));
     }
 
     /**
@@ -50,7 +55,7 @@ class ShiftController extends Controller
      */
     public function show(Shift $shift)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -61,7 +66,7 @@ class ShiftController extends Controller
      */
     public function edit(Shift $shift)
     {
-        //
+        return view('admin.shift.edit', compact('shift'));
     }
 
     /**
@@ -73,7 +78,10 @@ class ShiftController extends Controller
      */
     public function update(UpdateRequest $request, Shift $shift)
     {
-        //
+        $shift->fill($request->all());
+        $shift->save();
+        return redirect()->route('admin.shifts.edit', $shift->id)
+                ->with('success', __('message.shift.update_success'));
     }
 
     /**
@@ -84,6 +92,7 @@ class ShiftController extends Controller
      */
     public function destroy(Shift $shift)
     {
-        //
+        $shift->delete();
+        return redirect()->back()->with('success', __('message.shift.delete_success'));
     }
 }

@@ -16,4 +16,24 @@ class Schedule extends Model
         'shift_id',
         'date',
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
+
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class);
+    }
+
+    public function class()
+    {
+        return $this->belongsTo(Classs::class);
+    }
 }

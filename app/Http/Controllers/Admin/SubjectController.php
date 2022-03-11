@@ -18,7 +18,8 @@ class SubjectController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        //
+        $subject = Subject::paginate($request->limit);
+        return view('admin.subject.list', compact('subjects'));
     }
 
     /**
@@ -28,7 +29,7 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.subject.create');
     }
 
     /**
@@ -39,7 +40,11 @@ class SubjectController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        //
+        $subject = new Subject();
+        $subject->fill($request->all());
+        $subject->save();
+        return redirect()->route('admin.subjects.create')
+                            ->with('success', __('message.subjects.add_success'));
     }
 
     /**
@@ -50,7 +55,7 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -61,7 +66,7 @@ class SubjectController extends Controller
      */
     public function edit(Subject $subject)
     {
-        //
+        return view('admin.subject.edit', compact('subject'));
     }
 
     /**
@@ -73,7 +78,10 @@ class SubjectController extends Controller
      */
     public function update(UpdateRequest $request, Subject $subject)
     {
-        //
+        $subject->fill($request->all());
+        $subject->save();
+        return redirect()->route('admin.subjects.edit', $subject->id)
+                ->with('success', __('message.subject.update_success'));
     }
 
     /**
@@ -84,6 +92,7 @@ class SubjectController extends Controller
      */
     public function destroy(Subject $subject)
     {
-        //
+        $subject->delete();
+        return redirect()->back()->with('success', __('message.subject.delete_success'));
     }
 }

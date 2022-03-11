@@ -18,7 +18,8 @@ class CategoryController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        //
+        $categories = Category::paginate($request->limit);
+        return view('admin.category.list', compact('categories'));
     }
 
     /**
@@ -28,7 +29,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.category.create');
     }
 
     /**
@@ -39,7 +40,11 @@ class CategoryController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        //
+        $category = new Category();
+        $category->fill($request->all());
+        $category->save();
+        return redirect()->route('admin.categories.create')
+                            ->with('success', __('message.category.add_success'));
     }
 
     /**
@@ -50,7 +55,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -61,7 +66,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('admin.category.edit', compact('category'));
     }
 
     /**
@@ -73,7 +78,10 @@ class CategoryController extends Controller
      */
     public function update(UpdateRequest $request, Category $category)
     {
-        //
+        $category->fill($request->all());
+        $category->save();
+        return redirect()->route('admin.categories.edit', $category->id)
+                ->with('success', __('message.category.update_success'));
     }
 
     /**
@@ -84,6 +92,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->back()->with('success', __('message.category.delete_success'));
     }
 }

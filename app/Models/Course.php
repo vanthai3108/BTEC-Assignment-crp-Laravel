@@ -16,4 +16,9 @@ class Course extends Model
         'semester_id',
         'status',
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

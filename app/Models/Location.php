@@ -15,4 +15,9 @@ class Location extends Model
         'building',
         'status',
     ];
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
 }

@@ -12,6 +12,11 @@ class Category extends Model
 
     protected $fillable = [
         'name',
-        
+        'status'
     ];
+
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class);
+    }
 }

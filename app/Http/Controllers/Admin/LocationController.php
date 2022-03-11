@@ -18,7 +18,8 @@ class LocationController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        //
+        $locations = Location::paginate($request->limit);
+        return view('admin.location.list', compact('locations'));
     }
 
     /**
@@ -28,7 +29,7 @@ class LocationController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.location.create');
     }
 
     /**
@@ -39,7 +40,11 @@ class LocationController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        //
+        $location = new Location();
+        $location->fill($request->all());
+        $location->save();
+        return redirect()->route('admin.locations.create')
+                            ->with('success', __('message.location.add_success'));
     }
 
     /**
@@ -50,7 +55,7 @@ class LocationController extends Controller
      */
     public function show(Location $location)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -61,7 +66,7 @@ class LocationController extends Controller
      */
     public function edit(Location $location)
     {
-        //
+        return view('admin.location.edit', compact('location'));
     }
 
     /**
@@ -73,7 +78,10 @@ class LocationController extends Controller
      */
     public function update(UpdateRequest $request, Location $location)
     {
-        //
+        $location->fill($request->all());
+        $location->save();
+        return redirect()->route('admin.locations.edit', $location->id)
+                ->with('success', __('message.location.update_success'));
     }
 
     /**
@@ -84,6 +92,7 @@ class LocationController extends Controller
      */
     public function destroy(Location $location)
     {
-        //
+        $location->delete();
+        return redirect()->back()->with('success', __('message.location.delete_success'));
     }
 }
