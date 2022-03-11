@@ -18,7 +18,8 @@ class SemesterController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        //
+        $semesters = Semester::paginate($request->limit);
+        return view('admin.semesters.list', compact('semesters'));
     }
 
     /**
@@ -28,7 +29,7 @@ class SemesterController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.semesters.create');
     }
 
     /**
@@ -39,7 +40,11 @@ class SemesterController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        //
+        $semester = new Semester();
+        $semester->fill($request->all());
+        $semester->save();
+        return redirect()->route('admin.semesters.create')
+                            ->with('success', __('message.semester.add_success'));
     }
 
     /**
@@ -50,7 +55,7 @@ class SemesterController extends Controller
      */
     public function show(Semester $semester)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -61,7 +66,7 @@ class SemesterController extends Controller
      */
     public function edit(Semester $semester)
     {
-        //
+        return view('admin.semester.edit', compact('semester'));
     }
 
     /**
@@ -73,7 +78,10 @@ class SemesterController extends Controller
      */
     public function update(UpdateRequest $request, Semester $semester)
     {
-        //
+        $semester->fill($request->all());
+        $semester->save();
+        return redirect()->route('admin.semesters.edit', $semester->id)
+                ->with('success', __('message.semester.update_success'));
     }
 
     /**
@@ -84,6 +92,7 @@ class SemesterController extends Controller
      */
     public function destroy(Semester $semester)
     {
-        //
+        $semester->delete();
+        return redirect()->back()->with('success', __('message.semester.delete_success'));
     }
 }

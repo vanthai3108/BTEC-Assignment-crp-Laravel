@@ -17,4 +17,14 @@ class Subject extends Model
         'category_id',
         'status',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Profile::class);
+    }
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
 }

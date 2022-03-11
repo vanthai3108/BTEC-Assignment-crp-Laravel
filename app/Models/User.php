@@ -56,11 +56,26 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->belongsTo(Role::class);
+        return $this->hasOne(Role::class);
     }
 
     public function campus()
     {
-        return $this->belongsTo(Campus::class);
+        return $this->hasOne(Campus::class);
+    }
+
+    public function profiles()
+    {
+        return $this->hasMany(Profile::class);
+    }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class);
+    }
+
+    public function schedules()
+    {
+        return $this->belongsToMany(Schedule::class);
     }
 }

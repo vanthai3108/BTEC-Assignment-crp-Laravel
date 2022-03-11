@@ -14,4 +14,9 @@ class Campus extends Model
         'name',
         'status',
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 }

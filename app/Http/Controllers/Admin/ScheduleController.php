@@ -18,7 +18,8 @@ class ScheduleController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        //
+        $schedules = Schedule::paginate($request->limit);
+        return view('admin.schedule.list', compact('schedule'));
     }
 
     /**
@@ -28,7 +29,7 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.schedule.create');
     }
 
     /**
@@ -39,7 +40,11 @@ class ScheduleController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        //
+        $schedule = new Schedule();
+        $schedule->fill($request->all());
+        $schedule->save();
+        return redirect()->route('admin.schedules.create')
+                            ->with('success', __('message.schedule.add_success'));
     }
 
     /**
@@ -50,7 +55,7 @@ class ScheduleController extends Controller
      */
     public function show(Schedule $schedule)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -61,7 +66,7 @@ class ScheduleController extends Controller
      */
     public function edit(Schedule $schedule)
     {
-        //
+        return view('admin.schedule.edit', compact('schedule'));
     }
 
     /**
@@ -73,7 +78,10 @@ class ScheduleController extends Controller
      */
     public function update(UpdateRequest $request, Schedule $schedule)
     {
-        //
+        $schedule->fill($request->all());
+        $schedule->save();
+        return redirect()->route('admin.schedules.edit', $schedule->id)
+                ->with('success', __('message.schedule.update_success'));
     }
 
     /**
@@ -84,6 +92,7 @@ class ScheduleController extends Controller
      */
     public function destroy(Schedule $schedule)
     {
-        //
+        $schedule->delete();
+        return redirect()->back()->with('success', __('message.schedule.delete_success'));
     }
 }

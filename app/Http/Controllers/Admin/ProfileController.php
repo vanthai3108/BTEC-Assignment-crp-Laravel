@@ -18,7 +18,8 @@ class ProfileController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        //
+        $profiles = Profile::paginate($request->limit);
+        return view('admin.profile.list', compact('profiles'));
     }
 
     /**
@@ -28,7 +29,7 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -39,7 +40,7 @@ class ProfileController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        //
+
     }
 
     /**

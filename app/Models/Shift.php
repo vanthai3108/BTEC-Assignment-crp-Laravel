@@ -16,4 +16,19 @@ class Shift extends Model
         'end_date',
         'status',
     ];
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
+
+    public function shift()
+    {
+        return $this->belongsTo(Shift::class);
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
 }

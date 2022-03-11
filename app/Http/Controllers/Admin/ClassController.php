@@ -18,7 +18,8 @@ class ClassController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        //
+        $classes = Classs::paginate($request->limit);
+        return view('admin.classes.list', compact('classes'));
     }
 
     /**
@@ -28,7 +29,7 @@ class ClassController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.class.create');
     }
 
     /**
@@ -39,7 +40,11 @@ class ClassController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        //
+        $class = new Classs();
+        $class->fill($request->all());
+        $class->save();
+        return redirect()->route('admin.classes.create')
+                            ->with('success', __('message.class.add_success'));
     }
 
     /**
@@ -48,9 +53,9 @@ class ClassController extends Controller
      * @param  \App\Models\Classs  $classs
      * @return \Illuminate\Http\Response
      */
-    public function show(Classs $classs)
+    public function show(Classs $class)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -59,9 +64,9 @@ class ClassController extends Controller
      * @param  \App\Models\Classs  $classs
      * @return \Illuminate\Http\Response
      */
-    public function edit(Classs $classs)
+    public function edit(Classs $class)
     {
-        //
+        return view('admin.class.edit', compact('class'));
     }
 
     /**
@@ -71,9 +76,12 @@ class ClassController extends Controller
      * @param  \App\Models\Classs  $classs
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRequest $request, Classs $classs)
+    public function update(UpdateRequest $request, Classs $class)
     {
-        //
+        $class->fill($request->all());
+        $class->save();
+        return redirect()->route('admin.classes.edit', $class->id)
+                ->with('success', __('message.class.update_success'));
     }
 
     /**
@@ -82,8 +90,9 @@ class ClassController extends Controller
      * @param  \App\Models\Classs  $classs
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Classs $classs)
+    public function destroy(Classs $class)
     {
-        //
+        $class->delete();
+        return redirect()->back()->with('success', __('message.class.delete_success'));
     }
 }
