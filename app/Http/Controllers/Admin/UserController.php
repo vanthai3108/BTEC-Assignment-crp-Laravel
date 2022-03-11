@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BaseIndexRequest;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdateRequest;
+use App\Models\Campus;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -15,9 +20,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(BaseIndexRequest $request)
     {
-        //
+        $users = User::with(['role', 'campus'])->paginate($request->limit);
+        return view('admin.user.list', compact('users'));
     }
 
     /**
@@ -27,7 +33,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::get();
+        $campuses = Campus::get();
+        return view('admin.user.create', compact('roles', 'campuses'));
     }
 
     /**
@@ -38,7 +46,15 @@ class UserController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        //
+        $user = new User();
+        $user->fill($request->all());
+        $emailArr = explode('@', $user->email);
+        $user->password = Hash::make($request->password);
+        $user->code = $emailArr[0];
+        $user->avatar = 'storage/avatars/avatar.png';
+        $user->save();
+        return redirect()->route('admin.users.create')
+                            ->with('success', __('message.user.add_success'));
     }
 
     /**
@@ -49,7 +65,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -60,7 +76,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $roles = Role::get();
+        $campuses = Campus::get();
+        return view('admin.user.edit', compact('user', 'roles', 'campuses'));
     }
 
     /**
@@ -72,7 +90,10 @@ class UserController extends Controller
      */
     public function update(UpdateRequest $request, User $user)
     {
-        //
+        $user->fill($request->all());
+        $user->save();
+        return redirect()->route('admin.users.edit', $user->id)
+                ->with('success', __('message.user.update_success'));
     }
 
     /**
@@ -83,6 +104,28 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->back()->with('success', __('message.user.delete_success'));
+    }
+
+    public function blockUser(User $user)
+    {
+        if(Auth::user()->id != $user->id) {
+            $user->status = false;
+            $user->save();
+            return redirect()->back()->with('success', __('message.user.block_success'));
+        }
+        return redirect()->back();
+    }
+
+    public function unblockUser(User $user)
+    {
+        if(Auth::user()->id != $user->id) {
+            $user->status = true;
+            $user->save();
+            return redirect()->back()->with('success', __('message.user.unblock_success'));
+        }
+        return redirect()->back();
+        
     }
 }

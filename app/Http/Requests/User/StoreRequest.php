@@ -24,7 +24,12 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'min:10'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'min:8', 'string'],
+            'role_id' => ['required', 'exists:roles,id'],
+            'campus_id' => ['required', 'exists:campuses,id'],
+            'avatar' => ['image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
         ];
     }
 

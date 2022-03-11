@@ -75,7 +75,7 @@
 
             <div class="col-5">
                 <button type=submit class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
-                    <i class="fa-brands fa-facebook"></i>
+                    <i class="fas fa-right-to-bracket"></i>
                     {{ __('adminlte::adminlte.sign_in') }}
                 </button>
             </div>

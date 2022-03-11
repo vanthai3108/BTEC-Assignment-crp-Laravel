@@ -17,6 +17,7 @@
                     <tr style="background-color:#00a4c5e0;">
                         <th class="text-center">#</th>
                         <th class="text-center">Name</th>
+                        <th class="text-center">Status</th>
                         <th colspan="2" class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -25,6 +26,15 @@
                         <tr>
                             <td class="text-center align-middle">{{ ($campuses->currentPage() - 1)  * $campuses->perpage() + $loop->iteration }}</td>
                             <td class="align-middle">{{ $campus->name }}</td>
+                            @if ($campus->status)
+                                <td class="align-middle text-center">
+                                    <span class="right badge badge-success">Active</span>
+                                </td>
+                            @else
+                                <td class="align-middle text-center">
+                                    <span class="right badge badge-danger">Disactive</span>
+                                </td>
+                            @endif
                             <td class="text-center align-middle"><a href="{{ route('admin.campuses.edit', $campus->id) }}"><i class="fas fa-edit text-blue"></i></a></td>
                             <td class="align-middle">
                                 <form id="deleteElement-{{$campus->id}}" action="{{ route('admin.campuses.destroy',$campus->id) }}" method="POST">
