@@ -19,7 +19,7 @@ class SemesterController extends Controller
     public function index(BaseIndexRequest $request)
     {
         $semesters = Semester::paginate($request->limit);
-        return view('admin.semesters.list', compact('semesters'));
+        return view('admin.semester.list', compact('semesters'));
     }
 
     /**

@@ -18,8 +18,8 @@ class ScheduleController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        $schedules = Schedule::paginate($request->limit);
-        return view('admin.schedule.list', compact('schedule'));
+        $schedules = Schedule::with(['course', 'location', 'shift'])->paginate($request->limit);
+        return view('admin.schedule.list', compact('schedules'));
     }
 
     /**

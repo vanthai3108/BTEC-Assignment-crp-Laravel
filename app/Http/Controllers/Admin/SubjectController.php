@@ -18,7 +18,7 @@ class SubjectController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        $subject = Subject::paginate($request->limit);
+        $subject = Subject::with('category')->paginate($request->limit);
         return view('admin.subject.list', compact('subjects'));
     }
 

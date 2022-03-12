@@ -65,7 +65,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        abort(404);
+        $user->load(['courses']);
+        dd($user);
     }
 
     /**

@@ -19,7 +19,7 @@ class ClassController extends Controller
     public function index(BaseIndexRequest $request)
     {
         $classes = Classs::paginate($request->limit);
-        return view('admin.classes.list', compact('classes'));
+        return view('admin.class.list', compact('classes'));
     }
 
     /**

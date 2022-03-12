@@ -32,7 +32,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => ['auth']], funct
     Route::resource('/shifts', 'Admin\ShiftController');
     Route::resource('/locations', 'Admin\LocationController');
     Route::resource('/schedules', 'Admin\ScheduleController');
-    Route::resource('/Courses', 'Admin\CourseController');
+    Route::resource('/courses', 'Admin\CourseController');
 });
 
 Route::group(['middleware' => ['auth']], function(){

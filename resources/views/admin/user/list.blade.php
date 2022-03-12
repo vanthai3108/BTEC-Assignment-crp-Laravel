@@ -8,7 +8,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title"><a href="{{ route('admin.users.create') }}" class="text-info"><i class="fas fa-plus text-info"></i> Create new user</a></h3>
+            <h3 class="card-title"><a href="{{ route('admin.users.create') }}" class="text-success"><i class="fas fa-plus text-success"></i> Create new user</a></h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -57,20 +57,20 @@
                             @if(Auth::user()->id != $user->id)
                                 <td class="text-center align-middle">
                                 @if ($user->status)
-                                    <a href="{{ route('admin.users.block', $user->id) }}" class="btn btn-secondary">Block</a>
+                                    <a href="{{ route('admin.users.block', $user->id) }}" class="btn btn-secondary"><i class="fa fa-ban"></i> Block</a>
                                 @else
-                                    <a href="{{ route('admin.users.unblock', $user->id) }}" class="btn btn-warning">Unblock</a>
+                                    <a href="{{ route('admin.users.unblock', $user->id) }}" class="btn btn-secondary"><i class="fa fa-unlock-alt"></i> Unblock</a>
                                 @endif
                                 </td>
                             @else
                                 <td class="text-center align-middle text-red"> - </td>
                             @endif
-                            <td class="text-center align-middle"><a href="{{ route('admin.users.edit', $user->id) }}"><i class="fas fa-edit text-blue"></i></a></td>
-                            <td class="align-middle">
+                            <td class="text-center align-middle"><a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a></td>
+                            <td class="text-center align-middle">
                                 <form id="deleteElement-{{$user->id}}" action="{{ route('admin.users.destroy',$user->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" onClick="deleteAction(event, {{ $user->id }})" class="btn btn-block"><i class="fas fa-trash text-red"></i></button>
+                                    <button type="submit" onClick="deleteAction(event, {{ $user->id }})" class="btn btn-danger"><i class="fas fa-trash text-white"></i> Delete</button>
                                 </form>
                             </td>
                         </tr>

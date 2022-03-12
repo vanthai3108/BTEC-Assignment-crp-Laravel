@@ -8,7 +8,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title"><a href="{{ route('admin.campuses.create') }}" class="text-info"><i class="fas fa-plus text-info"></i> Create new campus</a></h3>
+            <h3 class="card-title"><a href="{{ route('admin.campuses.create') }}" class="text-success"><i class="fas fa-plus text-success"></i> Create new campus</a></h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -35,12 +35,12 @@
                                     <span class="right badge badge-danger">Disactive</span>
                                 </td>
                             @endif
-                            <td class="text-center align-middle"><a href="{{ route('admin.campuses.edit', $campus->id) }}"><i class="fas fa-edit text-blue"></i></a></td>
-                            <td class="align-middle">
+                            <td class="text-center align-middle"><a href="{{ route('admin.campuses.edit', $campus->id) }}" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a></td>
+                            <td class="text-center align-middle">
                                 <form id="deleteElement-{{$campus->id}}" action="{{ route('admin.campuses.destroy',$campus->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" onClick="deleteAction(event, {{ $campus->id }})" class="btn btn-block"><i class="fas fa-trash text-red"></i></button>
+                                    <button type="submit" onClick="deleteAction(event, {{ $campus->id }})" class="btn btn-danger"><i class="fas fa-trash text-white"></i> Delete</button>
                                 </form>
                             </td>
                         </tr>
