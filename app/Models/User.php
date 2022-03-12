@@ -56,12 +56,12 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->hasOne(Role::class);
+        return $this->belongsTo(Role::class);
     }
 
     public function campus()
     {
-        return $this->hasOne(Campus::class);
+        return $this->belongsTo(Campus::class);
     }
 
     public function profiles()
@@ -71,11 +71,13 @@ class User extends Authenticatable
 
     public function courses()
     {
-        return $this->belongsToMany(Course::class);
+        return $this->belongsToMany(Course::class, 'course_user', 'user_id', 'course_id')
+                    ->withPivot('score')->withTimestamps();
     }
 
     public function schedules()
     {
-        return $this->belongsToMany(Schedule::class);
+        return $this->belongsToMany(Schedule::class, 'schedule_user', 'user_id', 'schedule_id')
+                    ->withPivot(['trainer_id','status'])->withTimestamps();
     }
 }

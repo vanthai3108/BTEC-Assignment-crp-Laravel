@@ -434,7 +434,7 @@ return [
                 [
                     'text' => 'Add schedule',
                     'icon'    => 'fas fa-fw fa-sm fa-plus',
-                    'url'  => 'admin/schedules',
+                    'url'  => 'admin/schedules/create',
                 ],
             ],
         ],

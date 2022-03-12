@@ -21,14 +21,4 @@ class Shift extends Model
     {
         return $this->hasMany(Schedule::class);
     }
-
-    public function shift()
-    {
-        return $this->belongsTo(Shift::class);
-    }
-
-    public function location()
-    {
-        return $this->belongsTo(Location::class);
-    }
 }

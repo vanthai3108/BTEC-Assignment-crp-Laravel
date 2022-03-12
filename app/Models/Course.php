@@ -19,6 +19,27 @@ class Course extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'course_user', 'course_id', 'user_id')
+                    ->withPivot('score')->withTimestamps();;
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
+
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class);
+    }
+
+    public function class()
+    {
+        return $this->belongsTo(Classs::class);
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
     }
 }

@@ -19,7 +19,7 @@ class ShiftController extends Controller
     public function index(BaseIndexRequest $request)
     {
         $shifts = Shift::paginate($request->limit);
-        return view('admin.shifts.list', compact('shifts'));
+        return view('admin.shift.list', compact('shifts'));
     }
 
     /**

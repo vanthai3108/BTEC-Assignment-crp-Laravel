@@ -19,21 +19,29 @@ class Schedule extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'schedule_user', 'schedule_id', 'user_id')
+                    ->withPivot(['trainer_id', 'status'])->withTimestamps();
     }
 
-    public function subject()
+    public function trainers()
     {
-        return $this->belongsTo(Subject::class);
+        return $this->belongsTo(User::class, 'trainer_id', 'id');
     }
 
-    public function semester()
+    public function shift()
     {
-        return $this->belongsTo(Semester::class);
+        return $this->belongsTo(Shift::class);
     }
 
-    public function class()
+    public function location()
     {
-        return $this->belongsTo(Classs::class);
+        return $this->belongsTo(Location::class);
     }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+
 }
