@@ -29,7 +29,7 @@ class SemesterController extends Controller
      */
     public function create()
     {
-        return view('admin.semesters.create');
+        return view('admin.semester.create');
     }
 
     /**
