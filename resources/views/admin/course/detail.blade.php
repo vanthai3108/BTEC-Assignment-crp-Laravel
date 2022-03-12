@@ -12,39 +12,39 @@
                 {{ $course->class->name }} - {{ $course->subject->name }}
                 <span class="right badge badge-danger">{{ $course->semester->name }}</span>
                 @if ($course->status)
-                                <td class="align-middle text-center">
-                                    <span class="right badge badge-success">Active</span>
-                                </td>
-                            @else
-                                <td class="align-middle text-center">
-                                    <span class="right badge badge-danger">Disactive</span>
-                                </td>
-                            @endif
+                    <td class="align-middle text-center">
+                        <span class="right badge badge-success">Active</span>
+                    </td>
+                @else
+                    <td class="align-middle text-center">
+                        <span class="right badge badge-danger">Disactive</span>
+                    </td>
+                @endif
             </h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-            <div class="card {{ ($users->currentPage() != 1 || $schedules->currentPage() != 1) ? '': 'collapsed-card'}}">
+            {{-- <div class="card {{ $users->currentPage() != 1 ? '': 'collapsed-card'}}"> --}}
+            <div class="card">
                 <div class="card-header bg-info">
                     <h3 class="card-title">Course members</h3>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                            @if($users->currentPage() != 1 || $schedules->currentPage() != 1)
+                            <i class="fas fa-minus"></i>
+                            {{-- @if($users->currentPage() != 1)
                                 <i class="fas fa-minus"></i>
                             @else
                                 <i class="fas fa-plus"></i>
-                            @endif
-                            {{-- <i class="fas fa-plus"></i> --}}
+                            @endif --}}
                         </button>
                     </div>
                 </div>
-                <div class="card-body" 
-                @if ($users->currentPage() != 1 || $schedules->currentPage() != 1)
+                <div class="card-body" style="display: block;"
+                {{-- @if ($users->currentPage() != 1)
                     style="display: block;"
                 @else
                     style="display: none;"
-                @endif
-                
+                @endif --}}
                 >
                     <table class="table table-striped projects">
                         <thead>
