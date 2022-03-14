@@ -31,7 +31,11 @@
                             <td class="text-center align-middle">{{ ($users->currentPage() - 1)  * $users->perpage() + $loop->iteration }}</td>
                             <td class="align-middle">{{ $user->name }}</td>
                             <td class="align-middle text-center">
-                                <img height="80px" src="{{ config('app.url').'/'.$user->avatar }}" alt="avatar">
+                                @if(!str_starts_with($user->avatar, 'http'))
+                                    <img height="80px" src="{{ config('app.url').'/'.$user->avatar }}" alt="avatar">
+                                @else
+                                    <img height="80px" src="{{ $user->avatar }}" alt="avatar">
+                                @endif
                             </td>
                             <td class="align-middle">{{ $user->email }}</td>
                             @if ($user->campus)
@@ -54,7 +58,7 @@
                                 </td>
                             @endif
                             
-                            @if(Auth::user()->id != $user->id)
+                            @if(Auth::user()->id != $user->id || $user->role_id != 1)
                                 <td class="text-center align-middle">
                                 @if ($user->status)
                                     <a href="{{ route('admin.users.block', $user->id) }}" class="btn btn-secondary"><i class="fa fa-ban"></i> Block</a>
@@ -65,6 +69,7 @@
                             @else
                                 <td class="text-center align-middle text-red"> - </td>
                             @endif
+                            @if(Auth::user()->id != $user->id || $user->role_id != 1)
                             <td class="text-center align-middle"><a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a></td>
                             <td class="text-center align-middle">
                                 <form id="deleteElement-{{$user->id}}" action="{{ route('admin.users.destroy',$user->id) }}" method="POST">
@@ -73,6 +78,10 @@
                                     <button type="submit" onClick="deleteAction(event, {{ $user->id }})" class="btn btn-danger"><i class="fas fa-trash text-white"></i> Delete</button>
                                 </form>
                             </td>
+                            @else
+                                <td class="text-center align-middle text-red"> - </td>
+                                <td class="text-center align-middle text-red"> - </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

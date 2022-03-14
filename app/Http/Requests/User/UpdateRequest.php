@@ -29,7 +29,7 @@ class UpdateRequest extends FormRequest
             'password' => ['required', 'min:8', 'string'],
             'role_id' => ['required', 'exists:roles,id'],
             'campus_id' => ['required', 'exists:campuses,id'],
-            'avatar' => ['image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
+            'avatar' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ];
     }
 

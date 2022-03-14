@@ -50,6 +50,9 @@ return [
         'update_failed' => 'Update course failed! An error has occurred.',
         'update_success' => 'Update course successfully!',
         'delete_success' => 'Delete course successfully!',
+        'add_trainee_failed' => 'Add tranee into course failed! An error has occurred.',
+        'add_trainee_success' => 'Add new trainee into course successfully!',
+        'delete_trainee_success' => 'Delete trainee in course successfully!',
     ],
     'shift' => [
         'add_failed' => 'Add shift failed! An error has occurred.',
@@ -65,11 +68,15 @@ return [
         'update_success' => 'Update location successfully!',
         'delete_success' => 'Delete location successfully!',
     ],
-    'shedule' => [
+    'schedule' => [
         'add_failed' => 'Add shedule failed! An error has occurred.',
         'add_success' => 'Add new schedule successfully!',
         'update_failed' => 'Update schedule failed! An error has occurred.',
         'update_success' => 'Update shedule successfully!',
         'delete_success' => 'Delete shedule successfully!',
     ],
+    'grade' => [
+        'success' => 'You have scored successfully!',
+        'failed' => 'You have scored fail ! Maybe the course is over!'
+    ]
 ];

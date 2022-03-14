@@ -19,6 +19,7 @@ class CreateScheduleUserTable extends Migration
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('trainer_id')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->boolean('status')->nullable();
+            $table->string('note')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

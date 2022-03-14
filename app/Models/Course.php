@@ -20,7 +20,12 @@ class Course extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'course_user', 'course_id', 'user_id')
-                    ->withPivot('score')->withTimestamps();;
+                    ->withPivot(['score', 'status'])->withTimestamps();;
+    }
+
+    public function trainer()
+    {
+        return $this->belongsTo(User::class, 'trainer_id', 'id');
     }
 
     public function subject()
