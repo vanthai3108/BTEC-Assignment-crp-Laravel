@@ -69,15 +69,20 @@ class User extends Authenticatable
         return $this->hasMany(Profile::class);
     }
 
+    public function coursesTrainer()
+    {
+        return $this->hasMany(Course::class);
+    }
+
     public function courses()
     {
         return $this->belongsToMany(Course::class, 'course_user', 'user_id', 'course_id')
-                    ->withPivot('score')->withTimestamps();
+                    ->withPivot(['score', 'status'])->withTimestamps();
     }
 
     public function schedules()
     {
         return $this->belongsToMany(Schedule::class, 'schedule_user', 'user_id', 'schedule_id')
-                    ->withPivot(['trainer_id','status'])->withTimestamps();
+                    ->withPivot(['trainer_id','status', 'note'])->withTimestamps();
     }
 }

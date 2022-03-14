@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BaseIndexRequest;
 use App\Http\Requests\Subject\StoreRequest;
 use App\Http\Requests\Subject\UpdateRequest;
+use App\Models\AppConst;
+use App\Models\Category;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 
@@ -18,7 +20,7 @@ class SubjectController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        $subject = Subject::with('category')->paginate($request->limit);
+        $subjects = Subject::with('category')->paginate($request->limit);
         return view('admin.subject.list', compact('subjects'));
     }
 
@@ -29,7 +31,8 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        return view('admin.subject.create');
+        $categories = Category::where('status', AppConst::ACTIVE)->get();
+        return view('admin.subject.create', compact($categories));
     }
 
     /**
@@ -66,7 +69,8 @@ class SubjectController extends Controller
      */
     public function edit(Subject $subject)
     {
-        return view('admin.subject.edit', compact('subject'));
+        $categories = Category::where('status', AppConst::ACTIVE)->get();
+        return view('admin.subject.edit', compact('subject', 'categories'));
     }
 
     /**

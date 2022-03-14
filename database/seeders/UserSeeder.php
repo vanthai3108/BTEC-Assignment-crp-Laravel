@@ -120,7 +120,7 @@ class UserSeeder extends Seeder
             'email' => 'huyna@fpt.edu.vn',
             'password' => Hash::make('adminadmin'),
             'name' => 'Nguyễn Anh Huy',
-            'code' => 'huyennt',
+            'code' => 'huyna',
             'avatar' => 'storage/avatars/avatar.png',
             'role_id' => 3,
             'campus_id' => 1

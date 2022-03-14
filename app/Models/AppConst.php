@@ -10,4 +10,6 @@ class AppConst extends Model
     const ROLE_ADMIN = 1;
     const ROLE_TRAINER = 2;
     const ROLE_TRAINEE = 3;
+    const PASS = 50;
+    const ACTIVE = 1;
 }

@@ -18,6 +18,7 @@
                         <th class="text-center">#</th>
                         <th class="text-center">Class</th>
                         <th class="text-center">Subject</th>
+                        <th class="text-center">Trainer</th>
                         <th class="text-center">Semester</th>
                         <th class="text-center">Status</th>
                         <th colspan="3" class="text-center">Action</th>
@@ -29,6 +30,7 @@
                             <td class="text-center align-middle">{{ ($courses->currentPage() - 1)  * $courses->perpage() + $loop->iteration }}</td>
                             <td class="align-middle">{{ $course->class->name }}</td>
                             <td class="align-middle">{{ $course->subject->name }}</td>
+                            <td class="align-middle">{{ $course->trainer->name }}</td>
                             <td class="align-middle">{{ $course->semester->name }}</td>
                             @if ($course->status)
                                 <td class="align-middle text-center">

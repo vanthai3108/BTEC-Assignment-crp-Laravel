@@ -18,6 +18,7 @@ class CreateCourseUserTable extends Migration
             $table->foreignId('course_id')->nullable()->constrained('courses')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->integer('score')->nullable();
+            $table->boolean('status')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

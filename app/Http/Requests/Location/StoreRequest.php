@@ -24,7 +24,8 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'room' => ['required'],
+            'building' => ['required', 'min:5'],  
         ];
     }
 

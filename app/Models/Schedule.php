@@ -20,10 +20,10 @@ class Schedule extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'schedule_user', 'schedule_id', 'user_id')
-                    ->withPivot(['trainer_id', 'status'])->withTimestamps();
+                    ->withPivot(['trainer_id', 'status', 'note'])->withTimestamps();
     }
 
-    public function trainers()
+    public function trainer()
     {
         return $this->belongsTo(User::class, 'trainer_id', 'id');
     }
