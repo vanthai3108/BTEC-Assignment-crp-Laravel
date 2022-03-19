@@ -18,7 +18,7 @@ class LocationController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        $locations = Location::paginate($request->limit);
+        $locations = Location::orderBy('created_at', 'DESC')->paginate($request->limit);
         return view('admin.location.list', compact('locations'));
     }
 

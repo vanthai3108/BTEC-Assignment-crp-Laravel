@@ -18,7 +18,7 @@ class ClassController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        $classes = Classs::paginate($request->limit);
+        $classes = Classs::orderBy('created_at', 'DESC')->paginate($request->limit);
         return view('admin.class.list', compact('classes'));
     }
 

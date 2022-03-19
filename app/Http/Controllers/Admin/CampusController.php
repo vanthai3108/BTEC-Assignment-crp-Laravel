@@ -18,7 +18,7 @@ class CampusController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        $campuses = Campus::paginate($request->limit);
+        $campuses = Campus::orderBy('created_at', 'DESC')->paginate($request->limit);
         return view('admin.campus.list', compact('campuses'));
     }
 

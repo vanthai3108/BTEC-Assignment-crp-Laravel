@@ -24,7 +24,7 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'key' => ['required'],  
+            'key' => ['required', 'unique:profiles,key'],  
             'value' => ['required'],  
         ];
     }
@@ -33,7 +33,7 @@ class StoreRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             if ($validator->errors()->count() > 0) {
-                $validator->errors()->add('msg', __('message.location.add_failed'));
+                $validator->errors()->add('msg', __('message.profile.add_failed'));
             }
         });
     }

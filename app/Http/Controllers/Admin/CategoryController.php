@@ -18,7 +18,7 @@ class CategoryController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        $categories = Category::paginate($request->limit);
+        $categories = Category::orderBy('created_at', 'DESC')->paginate($request->limit);
         return view('admin.category.list', compact('categories'));
     }
 

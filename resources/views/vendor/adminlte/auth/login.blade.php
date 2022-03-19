@@ -93,4 +93,22 @@
             </a>
         </p>
     @endif
+
+       
+@stop
+@section('plugins.Sweetalert2', true)
+@section('js')
+<script>
+    function actionStatus(status, type) {
+        Swal.fire({
+            title: status,
+            type: type,
+        })
+    }
+</script>
+@if(session('block'))
+    <script>
+        actionStatus("{{session('block')}}", "error")
+    </script>               
+@endif 
 @stop

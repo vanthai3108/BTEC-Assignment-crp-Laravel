@@ -30,6 +30,7 @@ class CourseController extends Controller
     {
         $courses = Course::with(['subject', 'class', 'semester', 'trainer'])
                         ->orderBy('semester_id', 'DESC')
+                        ->orderBy('created_at', 'DESC')
                         ->paginate($request->limit);
         return view('admin.course.list', compact('courses'));
     }

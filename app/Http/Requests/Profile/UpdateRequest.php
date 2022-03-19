@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'key' => ['required'],  
+            'key' => ['required', 'unique:profiles,key,'.$this->profile->key],  
             'value' => ['required'],  
         ];
     }

@@ -19,7 +19,7 @@ Auth::routes(['register' => false, 'reset' => false]);
 Route::get('/login/{provider}', 'LoginBySocialController@loginSocial')->name('login_social');
 Route::get('/login/{provider}/process', 'LoginBySocialController@loginSocialHandle')->name('login_social_handle');
 
-Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => ['auth', 'role:admin']], function(){
+Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => ['auth', 'block', 'role:admin']], function(){
     Route::get('home', 'Admin\HomeController@index')->name('index');
     Route::resource('/campuses', 'Admin\CampusController');
     Route::get('/users/block/{user}', 'Admin\UserController@blockUser')->name('users.block');
@@ -40,7 +40,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => ['auth', 'role:a
     Route::resource('/courses', 'Admin\CourseController');
 });
 
-Route::group(['middleware' => ['auth', 'role:trainer']], function(){
+Route::group(['middleware' => ['auth', 'block', 'role:trainer']], function(){
     Route::get('/my_schedule/{schedule}/attendance', 'HomeController@attendance')->name('my_schedule.attendance');
     Route::post('/my_schedule/{schedule}/attendance', 'HomeController@attendanceHandle')->name('my_schedule.attendance_handle');
     Route::get('/my_schedule/{schedule}/attendance/edit', 'HomeController@attendanceEdit')->name('my_schedule.attendance_edit');
@@ -49,11 +49,14 @@ Route::group(['middleware' => ['auth', 'role:trainer']], function(){
     Route::post('/my_course/{course}/grading', 'HomeController@gradeCourseHandle')->name('my_course.grade_handle');
 });
 
-Route::group(['middleware' => ['auth', 'role:trainer,trainee']], function(){
+Route::group(['middleware' => ['auth', 'block']], function(){
     // Route::get('/', 'HomeController@index')->name('index');
     Route::get('/', 'HomeController@myCourse')->name('my_course.list');
     Route::get('/my_course/{course}', 'HomeController@showCourse')->name('my_course.show');
     Route::get('/my_schedule', 'HomeController@mySchedule')->name('my_schedule.list');
+    Route::get('profile/edit', 'ProfileController@editUser')->name('profile.edit_user');
+    Route::post('profile/edit', 'ProfileController@updateUser')->name('profile.update_user');
+    Route::resource('profile', 'ProfileController');
+    Route::get('{user}/info', 'ProfileController@info')->name('info');
 });
 
-Route::resource('profile', 'Admin\ProfileController')->middleware(['auth']);

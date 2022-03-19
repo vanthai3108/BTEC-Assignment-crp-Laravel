@@ -422,22 +422,22 @@ return [
                 ],
             ],
         ],
-        [
-            'text'    => 'Manage schedules',
-            'icon'    => 'fas fa-fw fa-lg fa-calendar-check',
-            'submenu' => [
-                [
-                    'text' => 'List schedules',
-                    'icon'    => 'fas fa-fw fa-sm fa-list',
-                    'url'  => 'admin/schedules',
-                ],
-                [
-                    'text' => 'Add schedule',
-                    'icon'    => 'fas fa-fw fa-sm fa-plus',
-                    'url'  => 'admin/schedules/create',
-                ],
-            ],
-        ],
+        // [
+        //     'text'    => 'Manage schedules',
+        //     'icon'    => 'fas fa-fw fa-lg fa-calendar-check',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'List schedules',
+        //             'icon'    => 'fas fa-fw fa-sm fa-list',
+        //             'url'  => 'admin/schedules',
+        //         ],
+        //         [
+        //             'text' => 'Add schedule',
+        //             'icon'    => 'fas fa-fw fa-sm fa-plus',
+        //             'url'  => 'admin/schedules/create',
+        //         ],
+        //     ],
+        // ],
 
         
     ],

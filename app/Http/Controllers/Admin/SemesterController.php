@@ -18,7 +18,7 @@ class SemesterController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        $semesters = Semester::paginate($request->limit);
+        $semesters = Semester::orderBy('created_at', 'DESC')->paginate($request->limit);
         return view('admin.semester.list', compact('semesters'));
     }
 
