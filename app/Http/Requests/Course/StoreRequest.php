@@ -26,9 +26,9 @@ class StoreRequest extends FormRequest
         return [
             'subject_id' => ['required', 'exists:subjects,id'],  
             'semester_id' => ['required', 'exists:semesters,id'],  
-            'class_id' => ['required', 'exists:classes,id'],  
+            'class_id' => ['required', 'exists:classses,id'],  
             'trainer_id' => ['required', 'exists:users,id'],  
-            'date' => ['required', 'date']
+            // 'date' => ['required', 'date']
         ];
     }
 
