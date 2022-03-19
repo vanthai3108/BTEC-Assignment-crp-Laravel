@@ -27,8 +27,9 @@ class Trainee implements Rule
      */
     public function passes($attribute, $value)
     {
-        User::with('role')->where('id', $value)->first();
-        return $value->role === AppConst::ROLE_TRAINEE;
+        // dd($value);
+        $user =User::with('role')->where('id', $value)->first();
+        return $user->role_id === AppConst::ROLE_TRAINEE;
     }
 
     /**

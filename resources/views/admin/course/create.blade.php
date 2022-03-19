@@ -3,7 +3,7 @@
 @section('title', 'Admin | Create course')
 
 @section('content_header')
-    <a href="{{ route('admin.classes.index') }}" class="btn btn-info">Go Back</a>
+    <a href="{{ route('admin.courses.index') }}" class="btn btn-info">Go Back</a>
     {{-- <h1>Add new campus</h1> --}}
 @stop
 
@@ -17,6 +17,7 @@
                     </div>
                     <form action="{{route('admin.courses.store')}}" method="POST">
                         @csrf
+                        <div class="card-body">
                         <div class="form-group">
                             <label for="subject">Subject:</label>
                             <select class="form-control" id="role" name="subject_id">
@@ -59,29 +60,60 @@
                             <label for="semester">Semester:</label>
                             <select class="form-control" id="semester" name="semester_id">
                                 @foreach ($semesters as $semester)
-                                    <option value="{{ $role->id }}"
-                                        @if (old('role_id') == $role->id)
+                                    <option value="{{ $semester->id }}"
+                                        @if (old('semester_id') == $semester->id)
                                             selected
                                         @endif
                                     >
-                                        {{ $role->name }}
+                                        {{ $semester->name }}
                                     </option>
                                 @endforeach
                             </select>
-                            @if ($errors->has('role_id'))
+                            @if ($errors->has('semester_id'))
                                 <div class="invalid-feedback">
-                                    <strong>{{ $errors->first('role_id') }}</strong>
+                                    <strong>{{ $errors->first('semester_id') }}</strong>
                                 </div>
                             @endif
                         </div>
+                        <div class="form-group">
+                            <label for="trainer">Trainer:</label>
+                            <select class="form-control" id="trainer" name="trainer_id">
+                                @foreach ($trainers as $trainer)
+                                    <option value="{{ $trainer->id }}"
+                                        @if (old('trainer_id') == $trainer->id)
+                                            selected
+                                        @endif
+                                    >
+                                        {{ $trainer->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('trainer_id'))
+                                <div class="invalid-feedback">
+                                    <strong>{{ $errors->first('trainer_id') }}</strong>
+                                </div>
+                            @endif
+                        </div>
+                        {{-- <div class="form-group">
+                            <label for="date">Date:</label>
+                            <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" 
+                                id="date" name="name" value="{{ old('name') }}" placeholder="Enter class name">
+                            @if ($errors->has('name'))
+                                <div class="invalid-feedback">
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </div>
+                            @endif
+                        </div> --}}
                         <div class="card-footer">
                             <button type="submit" class="btn btn-info col col-12">Save</button>
+                        </div>
                         </div>
                     </form>
                 </div>                
             </div>
         </div>        
     </div>
+
 @stop
 
 @section('css')

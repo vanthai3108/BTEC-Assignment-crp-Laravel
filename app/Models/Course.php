@@ -14,6 +14,7 @@ class Course extends Model
         'subject_id',
         'class_id',
         'semester_id',
+        'trainer_id',
         'status',
     ];
 
