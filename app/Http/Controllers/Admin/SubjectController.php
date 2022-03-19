@@ -32,7 +32,7 @@ class SubjectController extends Controller
     public function create()
     {
         $categories = Category::where('status', AppConst::ACTIVE)->get();
-        return view('admin.subject.create', compact($categories));
+        return view('admin.subject.create', compact('categories'));
     }
 
     /**
