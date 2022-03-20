@@ -9,6 +9,7 @@ use App\Http\Requests\Subject\UpdateRequest;
 use App\Models\AppConst;
 use App\Models\Category;
 use App\Models\Subject;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class SubjectController extends Controller
@@ -20,8 +21,30 @@ class SubjectController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        $subjects = Subject::with('category')->orderBy('created_at', 'DESC')->paginate($request->limit);
-        return view('admin.subject.list', compact('subjects'));
+        $categories = Category::get();
+        $params = $request->all();
+        $subjects = Subject::with('category')->orderBy('created_at', 'DESC')
+                            ->when($request->category_id, function (Builder $query) use ($request) {
+                                $query->where('category_id', $request->category_id);
+                            })
+                            ->when(isset($request->status) && $request->status != 1, function (Builder $query) use ($request) {
+                                $query->where('status', 0);
+                            })
+                            ->when($request->status, function (Builder $query) use ($request) {
+                                $query->where('status', $request->status);
+                            })
+                            ->when($request->keyword, function (Builder $query) use ($request) {
+                                $query->where(function (Builder $query) use ($request) {
+                                    $query->where('name', 'like', '%'.$request->keyword.'%')
+                                            ->orWhere('code', 'like', '%'.$request->keyword.'%')
+                                            ->orWhere('sessions', 'like', '%'.$request->keyword.'%')
+                                            ->orWhereHas('category', function (Builder $query) use ($request) {
+                                                $query->where('name', 'like', '%'.$request->keyword.'%');
+                                            });
+                                });
+                            })
+                            ->paginate($request->limit);
+        return view('admin.subject.list', compact('subjects', 'categories', 'params'));
     }
 
     /**
@@ -47,7 +70,7 @@ class SubjectController extends Controller
         $subject->fill($request->all());
         $subject->save();
         return redirect()->route('admin.subjects.create')
-                            ->with('success', __('message.subjects.add_success'));
+                            ->with('success', __('message.subject.add_success'));
     }
 
     /**

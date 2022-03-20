@@ -13,8 +13,7 @@
             <div class="col col-6">
                 <div class="card card-info">
                     <div class="card-header">
-                        <h3 class="card-title">Edit location: {{ $location->room }}</h3>
-            
+                        <h3 class="card-title">Edit location: {{ $location->room }} - {{ $location->building }}</h3>
                       </div>
                     <form action="{{route('admin.locations.update', $location->id)}}" method="POST">
                         @csrf
@@ -43,7 +42,7 @@
                                 </div>
                             <div class="form-group">
                                 <label for="status">Status:</label>
-                                <select class="form-control" id="status" room="status">
+                                <select class="form-control" id="status" name="status">
                                     <option value="1"
                                         {{ old('status') != null ? (old('status') == 1 ? 'selected' : '') 
                                         : ($location->status == 1 ? 'selected' : '' )}}

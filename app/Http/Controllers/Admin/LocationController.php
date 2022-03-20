@@ -7,6 +7,7 @@ use App\Http\Requests\BaseIndexRequest;
 use App\Http\Requests\Location\StoreRequest;
 use App\Http\Requests\Location\UpdateRequest;
 use App\Models\Location;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller
@@ -18,8 +19,23 @@ class LocationController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        $locations = Location::orderBy('created_at', 'DESC')->paginate($request->limit);
-        return view('admin.location.list', compact('locations'));
+        $params = $request->all();
+        $locations = Location::
+                            when(isset($request->status) && $request->status != 1, function (Builder $query) use ($request) {
+                                $query->where('status', 0);
+                            })
+                            ->when($request->status, function (Builder $query) use ($request) {
+                                $query->where('status', $request->status);
+                            })
+                            ->when($request->keyword, function (Builder $query) use ($request) {
+                                $query->where(function (Builder $query) use ($request) {
+                                    $query->where('room', 'like', '%'.$request->keyword.'%')
+                                            ->orWhere('building', 'like', '%'.$request->keyword.'%');
+                                });
+                            })
+                            ->orderBy('created_at', 'DESC')
+                            ->paginate($request->limit);
+        return view('admin.location.list', compact('locations', 'params'));
     }
 
     /**

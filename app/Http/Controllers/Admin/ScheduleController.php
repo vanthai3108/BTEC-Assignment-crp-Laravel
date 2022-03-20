@@ -44,7 +44,7 @@ class ScheduleController extends Controller
         $schedule = new Schedule();
         $schedule->fill($request->all());
         $schedule->save();
-        return redirect()->route('admin.schedules.create')
+        return redirect()->back()
                             ->with('success', __('message.schedule.add_success'));
     }
 

@@ -8,7 +8,84 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title"><a href="{{ route('admin.users.create') }}" class="text-success"><i class="fas fa-plus text-success"></i> Create new user</a></h3>
+            <h3 class="card-title">
+                <a href="{{ route('admin.users.create') }}" class="text-success">
+                    <i class="fas fa-plus text-success"></i> Create new user
+                </a>
+            </h3>
+            <form action="{{route('admin.users.index')}}" method="GET">
+                <div class="row justify-content-end">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label>Role:</label>
+                            <select class="form-control" style="width: 100%;" name="role_id">
+                                <option value="">All</option>
+                                @foreach($roles as $role)
+                                    <option value="{{$role->id}}"
+                                        @if(isset($params['role_id']) && $params['role_id'] == $role->id) selected @endif>
+                                        {{ucfirst($role->name)}}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label>Campus:</label>
+                            <select class="form-control" style="width: 100%;" name="campus_id">
+                                <option value="">All</option>
+                                @foreach($campuses as $campus)
+                                    <option value="{{$campus->id}}" 
+                                        @if(isset($params['campus_id']) && $params['campus_id'] == $campus->id) selected @endif>
+                                        {{ucfirst($campus->name)}}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label>Status:</label>
+                            <select class="form-control" style="width: 100%;" name="status">
+                                <option value="">All</option>
+                                <option value="1" @if(isset($params['status']) && $params['status'] == 1) selected @endif>
+                                    Active
+                                </option>
+                                <option value="0" @if(isset($params['status']) && $params['status'] == 0) selected @endif>
+                                    Inactive
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label>Quantity:</label>
+                            <select class="form-control" style="width: 100%;" name="limit">
+                                <option value="5" @if($params['limit'] == 5) selected @endif>5</option>
+                                <option value="10" @if($params['limit'] == 10) selected @endif>10</option>
+                                <option value="50" @if($params['limit'] == 50) selected @endif>50</option>
+                                <option value="100" @if($params['limit'] == 100) selected @endif>100</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-2  mt-2 p-0"">
+                        <div class="form-group mb-0 pt-4">
+                            <a href="{{route('admin.users.index')}}" class="btn btn-block btn-default ms-auto">Clear</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row justify-content-end">
+                    <div class="input-group col-8">
+                        <input type="search" name="keyword" class="form-control" placeholder="Type your keywords here" 
+                                value="@if(isset($params['keyword'])){{$params['keyword']}}@endif">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-info">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -54,7 +131,7 @@
                                 </td>
                             @else
                                 <td class="align-middle text-center">
-                                    <span class="right badge badge-danger">Disactive</span>
+                                    <span class="right badge badge-danger">Inactive</span>
                                 </td>
                             @endif
                             
@@ -102,5 +179,5 @@
 
 
 @section('js')
-    
+
 @stop

@@ -22,7 +22,7 @@ Profile | Add infomation
                                 id="key" name="key" value="{{ old('key') }}" placeholder="Enter infomation key">
                             @if ($errors->has('key'))
                                 <div class="invalid-feedback">
-                                    <strong>{{ $errors->first('name') }}</strong>
+                                    <strong>{{ $errors->first('key') }}</strong>
                                 </div>
                             @endif
                         </div>

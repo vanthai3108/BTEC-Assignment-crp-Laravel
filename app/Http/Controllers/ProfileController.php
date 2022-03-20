@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BaseIndexRequest;
 use App\Http\Requests\Profile\StoreRequest;
+use App\Http\Requests\Profile\UpdateAvatarRequest;
+use App\Http\Requests\Profile\UpdatePasswordRequest;
 use App\Models\AppConst;
 use App\Models\Course;
 use App\Models\Profile;
@@ -11,6 +13,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -127,14 +130,30 @@ class ProfileController extends Controller
         return redirect()->back()->with('success', __('message.profile.delete_success'));
     }
 
-    public function editUser()
+    public function editPassword()
     {
-        $user = Auth::user();
-        return view('user.profile.edit-user', compact('user'));
+        return view('user.profile.edit-password');
     }
 
-    public function updateUser()
+    public function updatePassword(UpdatePasswordRequest $request)
     {
-        // return view('user.profile.edit-user');
+        $userId = Auth::user()->id;
+        $user = User::where('id', $userId)->first();
+        $user->password = Hash::make($request->pass);
+        $user->save();
+        return redirect()->back()->with('success', __('message.profile.update_pass_success'));
+    }
+
+    public function updateAvatar(UpdateAvatarRequest $request)
+    {
+        $userId = Auth::user()->id;
+        $user = User::where('id', $userId)->first();
+        $request->file('avatar')->store('public/avatars');
+        $filename = $request->file('avatar')->hashName();
+        // $user->password = Hash::make($request->password);
+        $user->avatar = 'storage/avatars/'.$filename;
+        $user->save();
+        return redirect()->route('profile.index')
+                ->with('success', __('message.profile.update_avatar_success'));
     }
 }

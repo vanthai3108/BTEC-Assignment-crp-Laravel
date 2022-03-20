@@ -21,9 +21,10 @@ Profile | Edit infomation
                             <label for="key">Infomation key:</label>
                             <input type="text" class="form-control {{ $errors->has('key') ? 'is-invalid' : '' }}" 
                                 id="key" name="key" value="{{ old('key') ? old('key') : $profile->key }}" placeholder="Enter infomation key">
-                            @if ($errors->has('key'))
+                                @if ($errors->has('key'))
                                 <div class="invalid-feedback">
-                                    <strong>{{ $errors->first('name') }}</strong>
+                                    
+                                    <strong>{{ $errors->first('key')}}</strong>
                                 </div>
                             @endif
                         </div>

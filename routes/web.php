@@ -24,6 +24,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => ['auth', 'block'
     Route::resource('/campuses', 'Admin\CampusController');
     Route::get('/users/block/{user}', 'Admin\UserController@blockUser')->name('users.block');
     Route::get('/users/unblock/{user}', 'Admin\UserController@unblockUser')->name('users.unblock');
+    Route::get('/users/static', 'Admin\UserController@static')->name('users.static');
     Route::resource('/users', 'Admin\UserController');
     Route::resource('/categories', 'Admin\CategoryController');
     Route::resource('/subjects', 'Admin\SubjectController');
@@ -37,6 +38,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => ['auth', 'block'
     Route::get('/courses/{course}/add_trainee', 'Admin\CourseController@addTraineeView')->name('courses.add_trainee_view');
     Route::post('/courses/{course}/add_trainee', 'Admin\CourseController@addTrainee')->name('courses.add_trainee');
     Route::delete('/courses/{course}/{user}/', 'Admin\CourseController@deleteTrainee')->name('courses.delete_trainee');
+    Route::get('/courses/static', 'Admin\CourseController@static')->name('courses.static');
     Route::resource('/courses', 'Admin\CourseController');
 });
 
@@ -54,8 +56,9 @@ Route::group(['middleware' => ['auth', 'block']], function(){
     Route::get('/', 'HomeController@myCourse')->name('my_course.list');
     Route::get('/my_course/{course}', 'HomeController@showCourse')->name('my_course.show');
     Route::get('/my_schedule', 'HomeController@mySchedule')->name('my_schedule.list');
-    Route::get('profile/edit', 'ProfileController@editUser')->name('profile.edit_user');
-    Route::post('profile/edit', 'ProfileController@updateUser')->name('profile.update_user');
+    Route::get('profile/edit_password', 'ProfileController@editPassword')->name('profile.edit_password');
+    Route::post('profile/edit_password', 'ProfileController@updatePassword')->name('profile.update_password');
+    Route::post('profile/update_avatar', 'ProfileController@updateAvatar')->name('profile.update_avatar');
     Route::resource('profile', 'ProfileController');
     Route::get('{user}/info', 'ProfileController@info')->name('info');
 });

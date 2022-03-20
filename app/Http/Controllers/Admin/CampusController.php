@@ -7,6 +7,7 @@ use App\Http\Requests\BaseIndexRequest;
 use App\Http\Requests\Campus\StoreRequest;
 use App\Http\Requests\Campus\UpdateRequest;
 use App\Models\Campus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class CampusController extends Controller
@@ -18,8 +19,22 @@ class CampusController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        $campuses = Campus::orderBy('created_at', 'DESC')->paginate($request->limit);
-        return view('admin.campus.list', compact('campuses'));
+        $params = $request->all();
+        $campuses = Campus::
+                            when(isset($request->status) && $request->status != 1, function (Builder $query) use ($request) {
+                                $query->where('status', 0);
+                            })
+                            ->when($request->status, function (Builder $query) use ($request) {
+                                $query->where('status', $request->status);
+                            })
+                            ->when($request->keyword, function (Builder $query) use ($request) {
+                                $query->where(function (Builder $query) use ($request) {
+                                    $query->where('name', 'like', '%'.$request->keyword.'%');
+                                });
+                            })
+                    ->orderBy('created_at', 'DESC')
+                    ->paginate($request->limit);
+        return view('admin.campus.list', compact('campuses', 'params'));
     }
 
     /**

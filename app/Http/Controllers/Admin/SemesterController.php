@@ -7,6 +7,7 @@ use App\Http\Requests\BaseIndexRequest;
 use App\Http\Requests\Semester\StoreRequest;
 use App\Http\Requests\Semester\UpdateRequest;
 use App\Models\Semester;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class SemesterController extends Controller
@@ -18,8 +19,22 @@ class SemesterController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        $semesters = Semester::orderBy('created_at', 'DESC')->paginate($request->limit);
-        return view('admin.semester.list', compact('semesters'));
+        $params = $request->all();
+        $semesters = Semester::
+                            when(isset($request->status) && $request->status != 1, function (Builder $query) use ($request) {
+                                $query->where('status', 0);
+                            })
+                            ->when($request->status, function (Builder $query) use ($request) {
+                                $query->where('status', $request->status);
+                            })
+                            ->when($request->keyword, function (Builder $query) use ($request) {
+                                $query->where(function (Builder $query) use ($request) {
+                                    $query->where('name', 'like', '%'.$request->keyword.'%');
+                                });
+                            })
+                            ->orderBy('created_at', 'DESC')
+                            ->paginate($request->limit);
+        return view('admin.semester.list', compact('semesters', 'params'));
     }
 
     /**
