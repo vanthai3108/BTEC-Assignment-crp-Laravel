@@ -7,6 +7,7 @@ use App\Http\Requests\BaseIndexRequest;
 use App\Http\Requests\Classs\UpdateRequest;
 use App\Http\Requests\Classs\StoreRequest;
 use App\Models\Classs;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ClassController extends Controller
@@ -18,8 +19,22 @@ class ClassController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        $classes = Classs::paginate($request->limit);
-        return view('admin.class.list', compact('classes'));
+        $params = $request->all();
+        $classes = Classs::
+                        when(isset($request->status) && $request->status != 1, function (Builder $query) use ($request) {
+                            $query->where('status', 0);
+                        })
+                        ->when($request->status, function (Builder $query) use ($request) {
+                            $query->where('status', $request->status);
+                        })
+                        ->when($request->keyword, function (Builder $query) use ($request) {
+                            $query->where(function (Builder $query) use ($request) {
+                                $query->where('name', 'like', '%'.$request->keyword.'%');
+                            });
+                        })
+                        ->orderBy('created_at', 'DESC')
+                        ->paginate($request->limit);
+        return view('admin.class.list', compact('classes', 'params'));
     }
 
     /**

@@ -13,7 +13,7 @@
             <div class="col col-6">
                 <div class="card card-info">
                     <div class="card-header">
-                        <h3 class="card-title">Add new trainee</h3>
+                        <h3 class="card-title">Add trainee in course: {{$course->class->name}} - {{$course->subject->name}}</h3>
                     </div>
                     <form action="{{route('admin.courses.add_trainee',$course->id)}}" method="POST">
                         @csrf
@@ -27,7 +27,7 @@
                                                 selected
                                             @endif
                                         >
-                                            {{ $user->name }}
+                                            {{ $user->name }} - {{ $user->email }}
                                         </option>
                                     @endforeach
                                 </select>

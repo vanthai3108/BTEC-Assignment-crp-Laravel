@@ -101,7 +101,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <ul class="pagination pagination-sm m-0 justify-content-center">
+                    <ul class="pagination pagination-sm m-0 mt-3 justify-content-center">
                         {{ $users->links('vendor.pagination.custom-detail', ['psecond' => $schedules->links()->paginator]) }}
                     </ul>
                 </div>

@@ -46,9 +46,11 @@
     </div>
 @stop
 @section('plugins.Sweetalert2', true)
+@section ('plugins.ChartJS' , true )
 @section('adminlte_js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
     @stack('js')
-    @yield('js')
+    
     <script>
         function deleteAction(e, id) {
             e.preventDefault();
@@ -73,6 +75,57 @@
                 type: type,
             })
         }
+        function makeChart(elementId, chartType, dataLables, dataValues, dataColors) {
+        var myChart1 = document.getElementById(elementId).getContext('2d');
+
+        // Global Options
+        Chart.defaults.global.defaultFontFamily = 'Lato';
+        Chart.defaults.global.defaultFontSize = 18;
+        Chart.defaults.global.defaultFontColor = '#777';
+
+        var massPopChart = new Chart(myChart1, {
+        type:chartType, // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+        data:{
+            labels: dataLables,
+            datasets:[{
+            label:'Population',
+            data: dataValues,
+            //backgroundColor:'green',
+            backgroundColor: dataColors,
+            borderWidth:1,
+            borderColor:'#777',
+            hoverBorderWidth:3,
+            hoverBorderColor:'#000'
+            }]
+        },
+        options:{
+            // title:{
+            // display:true,
+            // text:'Largest Cities In Massachusetts',
+            // fontSize:25,
+            // responsive: true
+            // },
+            legend:{
+            display:true,
+            position:'right',
+            labels:{
+                fontColor:'#000'
+            }
+            },
+            layout:{
+            padding:{
+                left:50,
+                right:0,
+                bottom:0,
+                top:0
+            }
+            },
+            tooltips:{
+            enabled:true
+            }
+        }
+        });
+    }
     </script>
     @error('msg')
         <script>
@@ -84,4 +137,5 @@
             actionStatus("{{session('success')}}", "success")
         </script>               
     @endif
+    @yield('js')
 @stop

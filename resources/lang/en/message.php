@@ -78,5 +78,17 @@ return [
     'grade' => [
         'success' => 'You have scored successfully!',
         'failed' => 'You have scored fail ! Maybe the course is over!'
-    ]
+    ],
+    'profile' => [
+        'add_failed' => 'Add infomation failed! An error has occurred.',
+        'add_success' => 'Add new infomation successfully!',
+        'update_failed' => 'Update infomation failed! An error has occurred.',
+        'update_avatar_failed' => 'Update avatar failed! An error has occurred.',
+        'update_success' => 'Update infomation successfully!',
+        'update_avatar_success' => 'Update avatar successfully!',
+        'delete_success' => 'Delete infomation successfully!',
+        'update_pass_success' => 'Change password successfully!',
+        'update_pass_failed' => 'Change password failed! An error has occurred.',
+    ],
+    'block' => 'This account has been lock!'
 ];

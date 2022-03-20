@@ -123,7 +123,7 @@ class UserSeeder extends Seeder
             'code' => 'huyna',
             'avatar' => 'storage/avatars/avatar.png',
             'role_id' => 3,
-            'campus_id' => 1
+            'campus_id' => 2
         ]);
         User::create([
             'email' => 'tungtt@fpt.edu.vn',
@@ -142,7 +142,7 @@ class UserSeeder extends Seeder
             'avatar' => 'storage/avatars/avatar.png',
             'role_id' => 3,
             'status' => 0,
-            'campus_id' => 1
+            'campus_id' => 3
         ]);
         User::create([
             'email' => 'baolt@fpt.edu.vn',
@@ -160,7 +160,7 @@ class UserSeeder extends Seeder
             'code' => 'datpt',
             'avatar' => 'storage/avatars/avatar.png',
             'role_id' => 3,
-            'campus_id' => 1
+            'campus_id' => 2
         ]);
         User::create([
             'email' => 'minhvt@fpt.edu.vn',
@@ -170,7 +170,7 @@ class UserSeeder extends Seeder
             'avatar' => 'storage/avatars/avatar.png',
             'role_id' => 3,
             'status' => 0,
-            'campus_id' => 1
+            'campus_id' => 4
         ]);
         
     }

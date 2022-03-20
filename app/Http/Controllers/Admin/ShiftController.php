@@ -18,7 +18,7 @@ class ShiftController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        $shifts = Shift::paginate($request->limit);
+        $shifts = Shift::orderBy('created_at', 'DESC')->paginate($request->limit);
         return view('admin.shift.list', compact('shifts'));
     }
 

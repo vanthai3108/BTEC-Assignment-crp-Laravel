@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Profile;
 
+use App\Rules\MatchOldPassword;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdatePasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +25,9 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'key' => ['required', 'unique:profiles,key'],  
-            'value' => ['required'],  
+            'old_pass' => ['required', new MatchOldPassword],
+            'pass' => ['required', 'min:8', 'same:password_confirmed'],
+            'password_confirmed' => ['required']
         ];
     }
 
@@ -33,7 +35,8 @@ class StoreRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             if ($validator->errors()->count() > 0) {
-                $validator->errors()->add('msg', __('message.profile.add_failed'));
+                // dd($validator->errors());
+                $validator->errors()->add('msg', __('message.profile.update_pass_failed'));
             }
         });
     }

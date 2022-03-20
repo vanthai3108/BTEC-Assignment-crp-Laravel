@@ -18,6 +18,7 @@ class LoginBySocialController extends Controller
     public function loginSocialHandle($provider)
     {
         $user = Socialite::driver($provider)->stateless()->user();
+        // dd($user);
         if(!$user) {
             return redirect('/login');
         }

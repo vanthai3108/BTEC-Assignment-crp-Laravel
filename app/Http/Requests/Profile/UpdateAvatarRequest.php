@@ -4,7 +4,7 @@ namespace App\Http\Requests\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateAvatarRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'key' => ['required', 'unique:profiles,key'],  
-            'value' => ['required'],  
+            'avatar' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ];
     }
 
@@ -33,7 +32,7 @@ class StoreRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             if ($validator->errors()->count() > 0) {
-                $validator->errors()->add('msg', __('message.profile.add_failed'));
+                $validator->errors()->add('msg', __($validator->errors()->messages()['avatar'][0]));
             }
         });
     }

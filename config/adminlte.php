@@ -268,31 +268,9 @@ return [
         //     'icon' => 'fas fa-fw fa-lock',
         // ],
         [
-            'text'         => '',
-            'url'          => '/',
-            'icon'         => 'fas fa-lg fa-fw fa-home',
-            'topnav_right' => true,
-        ],
-        [
             'text' => 'Dashboard',
             'url'  => 'admin/home',
             'icon' => 'fas fa-fw fa-lg fa-tachometer-alt',
-        ],
-        [
-            'text'    => 'Manage campuses',
-            'icon'    => 'fas fa-fw fa-lg fa-building',
-            'submenu' => [
-                [
-                    'text' => 'List campuses',
-                    'icon'    => 'fas fa-fw fa-sm fa-list',
-                    'url'  => 'admin/campuses',
-                ],
-                [
-                    'text' => 'Add campus',
-                    'icon'    => 'fas fa-fw fa-sm fa-plus',
-                    'url'  => 'admin/campuses/create',
-                ],
-            ],
         ],
         [
             'text'    => 'Manage users',
@@ -307,6 +285,33 @@ return [
                     'text' => 'Add user',
                     'icon'    => 'fas fa-fw fa-sm fa-plus',
                     'url'  => 'admin/users/create',
+                ],
+                [
+                    'text' => 'User Statistics',
+                    'icon'    => 'fas fa-fw fa-sm fa-chart-bar',
+                    'url'  => 'admin/users/static',
+                ],
+            ],
+        ],
+        [
+            'text'         => '',
+            'url'          => '/',
+            'icon'         => 'fas fa-lg fa-fw fa-home',
+            'topnav_right' => true,
+        ],
+        [
+            'text'    => 'Manage campuses',
+            'icon'    => 'fas fa-fw fa-lg fa-building',
+            'submenu' => [
+                [
+                    'text' => 'List campuses',
+                    'icon'    => 'fas fa-fw fa-sm fa-list',
+                    'url'  => 'admin/campuses',
+                ],
+                [
+                    'text' => 'Add campus',
+                    'icon'    => 'fas fa-fw fa-sm fa-plus',
+                    'url'  => 'admin/campuses/create',
                 ],
             ],
         ],
@@ -328,7 +333,7 @@ return [
         ],
         [
             'text'    => 'Manage subjects',
-            'icon'    => 'fas fa-fw fa-lg fa-paw',
+            'icon'    => 'fas fa-fw fa-lg fa-tag',
             'submenu' => [
                 [
                     'text' => 'List subjects',
@@ -388,6 +393,11 @@ return [
                     'icon'    => 'fas fa-fw fa-sm fa-plus',
                     'url'  => 'admin/courses/create',
                 ],
+                [
+                    'text' => 'Course Statistics',
+                    'icon'    => 'fas fa-fw fa-sm fa-chart-bar',
+                    'url'  => 'admin/courses/static',
+                ],
             ],
         ],
         [
@@ -422,22 +432,22 @@ return [
                 ],
             ],
         ],
-        [
-            'text'    => 'Manage schedules',
-            'icon'    => 'fas fa-fw fa-lg fa-calendar-check',
-            'submenu' => [
-                [
-                    'text' => 'List schedules',
-                    'icon'    => 'fas fa-fw fa-sm fa-list',
-                    'url'  => 'admin/schedules',
-                ],
-                [
-                    'text' => 'Add schedule',
-                    'icon'    => 'fas fa-fw fa-sm fa-plus',
-                    'url'  => 'admin/schedules/create',
-                ],
-            ],
-        ],
+        // [
+        //     'text'    => 'Manage schedules',
+        //     'icon'    => 'fas fa-fw fa-lg fa-calendar-check',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'List schedules',
+        //             'icon'    => 'fas fa-fw fa-sm fa-list',
+        //             'url'  => 'admin/schedules',
+        //         ],
+        //         [
+        //             'text' => 'Add schedule',
+        //             'icon'    => 'fas fa-fw fa-sm fa-plus',
+        //             'url'  => 'admin/schedules/create',
+        //         ],
+        //     ],
+        // ],
 
         
     ],

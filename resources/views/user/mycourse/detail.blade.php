@@ -136,7 +136,7 @@
                             @foreach($users as $user)
                                 <tr>
                                     <td class="text-center align-middle">{{ ($users->currentPage() - 1)  * $users->perpage() + $loop->iteration }}</td>
-                                    <td class="align-middle">{{ $user->name }}</td>
+                                    <td class="align-middle"><a href="{{ route('info', $user->id) }}">{{ $user->name }}</a></td>
                                     <td class="align-middle text-center">
                                         @if(!str_starts_with($user->avatar, 'http'))
                                             <img class="table-avatar" src="{{ config('app.url').'/'.$user->avatar }}" alt="avatar">
