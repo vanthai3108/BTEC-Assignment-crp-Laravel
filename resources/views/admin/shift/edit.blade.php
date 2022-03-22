@@ -32,7 +32,7 @@
                             <div class="form-group">
                                 <label for="start_time">Start time:</label>
                                 <input type="time" class="form-control {{ $errors->has('start_time') ? 'is-invalid' : '' }}" 
-                                    id="start_time" name="start_time" value="{{ old('start_time') }}" 
+                                    id="start_time" name="start_time" value="{{ old('start_time') ? old('start_time') : $shift->start_time }}" >
                                 @if ($errors->has('start_time'))
                                     <div class="invalid-feedback">
                                         <strong>{{ $errors->first('start_time') }}</strong>
@@ -42,7 +42,7 @@
                             <div class="form-group">
                                 <label for="end_time">End time:</label>
                                 <input type="time" class="form-control {{ $errors->has('end_time') ? 'is-invalid' : '' }}" 
-                                    id="end_time" name="end_time" value="{{ old('end_time') }}" 
+                                    id="end_time" name="end_time" value="{{ old('end_time') ? old('end_time') : $shift->end_time }}" >
                                 @if ($errors->has('end_time'))
                                     <div class="invalid-feedback">
                                         <strong>{{ $errors->first('end_time') }}</strong>

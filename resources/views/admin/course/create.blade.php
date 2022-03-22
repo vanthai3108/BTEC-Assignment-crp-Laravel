@@ -104,9 +104,9 @@
                                 </div>
                             @endif
                         </div> --}}
+                        </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-info col col-12">Save</button>
-                        </div>
                         </div>
                     </form>
                 </div>                
