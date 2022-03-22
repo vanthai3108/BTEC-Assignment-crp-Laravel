@@ -25,8 +25,8 @@ class StoreRequest extends FormRequest
     {
         return [
             'name' => ['required'],  
-            'start_time' => ['required', 'time'],  
-            'end_time' => ['required', 'time'],  
+            'start_time' => ['required', 'date_format:H:i'],  
+            'end_time' => ['required', 'date_format:H:i'],  
         ];
     }
 

@@ -7,6 +7,7 @@ use App\Http\Requests\BaseIndexRequest;
 use App\Http\Requests\Shift\StoreRequest;
 use App\Http\Requests\Shift\UpdateRequest;
 use App\Models\Shift;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ShiftController extends Controller
@@ -18,8 +19,23 @@ class ShiftController extends Controller
      */
     public function index(BaseIndexRequest $request)
     {
-        $shifts = Shift::orderBy('created_at', 'DESC')->paginate($request->limit);
-        return view('admin.shift.list', compact('shifts'));
+        $params = $request->all();
+        $shifts = Shift::
+            when(isset($request->status) && $request->status != 1, function (Builder $query) use ($request) {
+                $query->where('status', 0);
+            })
+            ->when($request->status, function (Builder $query) use ($request) {
+                $query->where('status', $request->status);
+            })
+            ->when($request->keyword, function (Builder $query) use ($request) {
+                $query->where(function (Builder $query) use ($request) {
+                    $query->where('name', 'like', '%'.$request->keyword.'%')
+                            ->orWhere('start_time', 'like', '%'.$request->keyword.'%')
+                            ->orWhere('end_time', 'like', '%'.$request->keyword.'%');
+                });
+            })
+            ->orderBy('start_time', 'ASC')->paginate($request->limit);
+        return view('admin.shift.list', compact('shifts', 'params'));
     }
 
     /**

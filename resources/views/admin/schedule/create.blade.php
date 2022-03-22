@@ -60,7 +60,7 @@
                         <div class="form-group">
                             <label for="date">Date:</label>
                             <input type="date" class="form-control {{ $errors->has('date') ? 'is-invalid' : '' }}" 
-                                id="date" name="date" value="{{ old('date') }}">
+                                id="date" name="date" value="{{ old('date', date('Y-m-d')) }}">
                             @if ($errors->has('date'))
                                 <div class="invalid-feedback">
                                     <strong>{{ $errors->first('date') }}</strong>

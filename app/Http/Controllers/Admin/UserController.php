@@ -12,6 +12,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -163,7 +164,7 @@ class UserController extends Controller
 
     public function static()
     {
-        $users = User::select('campus_id', DB::raw('count(*) as total'))
+        $users = User::where('role_id', AppConst::ROLE_TRAINEE)->select('campus_id', DB::raw('count(*) as total'))
         ->groupBy('campus_id')
         ->orderBy('campus_id', 'DESC')
         ->get();
