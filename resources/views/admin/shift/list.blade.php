@@ -42,7 +42,7 @@
                     </div>
                     <div class="col-2 mt-2">
                         <div class="form-group mb-0 pt-4">
-                            <a href="{{route('admin.classes.index')}}" class="btn btn-block btn-default">Clear</a>
+                            <a href="{{route('admin.shifts.index')}}" class="btn btn-block btn-default">Clear</a>
                         </div>
                     </div>
                 </div>
