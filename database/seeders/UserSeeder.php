@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('adminadmin'),
             'name' => 'Admin',
             'code' => 'admin',
-            'avatar' => 'storage/avatars/avatar.png',
+            'avatar' => 'storage/avatars/hung.jpg',
             'role_id' => 1,
             // 'campus_id' => 1
         ]);
@@ -93,7 +93,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('adminadmin'),
             'name' => 'Đào Tuấn Hùng',
             'code' => 'hungdt',
-            'avatar' => 'storage/avatars/avatar.png',
+            'avatar' => 'storage/avatars/hung.jpg',
             'role_id' => 3,
             'campus_id' => 1
         ]);
