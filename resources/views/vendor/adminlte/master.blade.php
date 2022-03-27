@@ -82,6 +82,7 @@
     @yield('body')
 
     {{-- Base Scripts --}}
+    
     @if(!config('adminlte.enabled_laravel_mix'))
         <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -94,6 +95,7 @@
     @else
         <script src="{{ mix(config('adminlte.laravel_mix_js_path', 'js/app.js')) }}"></script>
     @endif
+    
 
     {{-- Livewire Script --}}
     @if(config('adminlte.livewire'))
@@ -106,7 +108,7 @@
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
-
+     
 </body>
 
 </html>

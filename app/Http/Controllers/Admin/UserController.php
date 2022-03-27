@@ -55,6 +55,7 @@ class UserController extends Controller
                         });
                     })
                     ->paginate($request->limit);
+                    // dd($params);
         return view('admin.user.list', compact('users', 'roles', 'campuses', 'params'));
     }
 

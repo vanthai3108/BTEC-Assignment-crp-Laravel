@@ -39,6 +39,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => ['auth', 'block'
     Route::post('/courses/{course}/add_trainee', 'Admin\CourseController@addTrainee')->name('courses.add_trainee');
     Route::delete('/courses/{course}/{user}/', 'Admin\CourseController@deleteTrainee')->name('courses.delete_trainee');
     Route::get('/courses/static', 'Admin\CourseController@static')->name('courses.static');
+    Route::get('/courses/{course}/trainees/', 'Admin\CourseController@trainees')->name('courses.trainees');
     Route::resource('/courses', 'Admin\CourseController');
 });
 

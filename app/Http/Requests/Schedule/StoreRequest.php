@@ -27,7 +27,8 @@ class StoreRequest extends FormRequest
             'course_id' => ['required', 'exists:courses,id'],  
             'shift_id' => ['required', 'exists:shifts,id'],  
             'location_id' => ['required', 'exists:locations,id'],  
-            'date' => ['required', 'date', 'after:yesterday']
+            'date' => ['date', 'after:yesterday'],
+            'dates' => ['required']
         ];
     }
 

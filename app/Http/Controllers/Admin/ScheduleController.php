@@ -29,7 +29,6 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        
         return view('admin.schedule.create');
     }
 
@@ -41,9 +40,16 @@ class ScheduleController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $schedule = new Schedule();
-        $schedule->fill($request->all());
-        $schedule->save();
+        // dd($request->all());
+        $data = $request->except(['_token', 'dates']);
+        foreach ($request->dates as $date) {
+            $data['date'] = date("Y-m-d", strtotime($date));
+            
+            // dd($data);
+            $schedule = new Schedule();
+            $schedule->fill($data);
+            $schedule->save();
+        }
         return redirect()->back()
                             ->with('success', __('message.schedule.add_success'));
     }

@@ -115,6 +115,7 @@ class CourseController extends Controller
         })->paginate(5, ['*'], 'user_page');
         $schedules = Schedule::with(['shift', 'location'])
                                 ->where('course_id', $course->id)
+                                ->orderBy('date', 'ASC')
                                 ->paginate(10, ['*'], 'schedule_page');
         // dd($users, $schedules, $request);
         return view('admin.course.detail', compact('course', 'users', 'schedules'));
@@ -175,19 +176,40 @@ class CourseController extends Controller
         return view('admin.course.addTrainee', compact('trainees', 'course'));
     }
 
+    public function trainees(Course $course, Request $request)
+    {
+        $trainees = User::where([
+                            'role_id' => AppConst::ROLE_TRAINEE,
+                            'status' => AppConst::ACTIVE
+        ])->whereDoesntHave('courses', function (Builder $query) use ($course) {
+            $query->where('course_id', '=', $course->id);
+        })->when($request->keyword, function (Builder $query) use ($request) {
+            $query->where(function (Builder $query) use ($request) {
+                $query->where('name', 'like', '%'.$request->keyword.'%')
+                        ->orWhere('email', 'like', '%'.$request->keyword.'%');
+            });
+        })
+        ->limit(10)->get();
+        return response()->json($trainees);
+    }
+
     public function addTrainee(Course $course, AddTraineeRequest $request)
     {
-        $userCount = DB::table('course_user')
+        // dd($request->all());
+        $users = $request->users;
+        foreach($users as $user) {
+            $userCount = DB::table('course_user')
                         ->where([
-                            'user_id' => $request->user,
+                            'user_id' => $user,
                             'course_id' => $course->id
                         ])->count();
-        if ($userCount == 0) {
-            $course->users()->attach($request->user);
-            return redirect()->route('admin.courses.add_trainee_view', $course->id)
-                                ->with('success', __('message.course.add_trainee_success'));
+            if ($userCount == 0) {
+                $course->users()->attach($user);
+            }
         }
-        return redirect()->back(); 
+        
+        return redirect()->route('admin.courses.add_trainee_view', $course->id)
+                                ->with('success', __('message.course.add_trainee_success'));
     }
 
     public function deleteTrainee(Course $course, User $user)

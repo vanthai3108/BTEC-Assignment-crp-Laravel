@@ -100,14 +100,14 @@
         <!-- /.card-body -->
         <div class="card-footer clearfix">
             <ul class="pagination pagination-sm m-0 justify-content-center">
-                {{ $campuses->links('vendor.pagination.custom-basic') }}
+                {{ $campuses->links('vendor.pagination.custom-basic-admin', ['params' => $params]) }}
             </ul>
         </div>
     </div>
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+<link rel="stylesheet" href="/css/admin_custom.css">
 @stop
 
 
