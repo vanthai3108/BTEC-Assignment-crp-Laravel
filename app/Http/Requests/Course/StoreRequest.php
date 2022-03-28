@@ -28,7 +28,8 @@ class StoreRequest extends FormRequest
             'semester_id' => ['required', 'exists:semesters,id'],  
             'class_id' => ['required', 'exists:classses,id'],  
             'trainer_id' => ['required', 'exists:users,id'],  
-            // 'date' => ['required', 'date']
+            'start_date' => ['required', 'date'],
+            'end_date' => ['required', 'date', 'after:start_date'],
         ];
     }
 

@@ -35,6 +35,15 @@
                                 
                             </div> --}}
                             <trainee-selector></trainee-selector>
+                                @if ($errors->has('users'))
+                                <div class="invalid-feedback" style="display: block;">
+                                    <strong>{{ $errors->first('users') }}</strong>
+                                </div>
+                                @elseif($errors->has('users.*'))
+                                <div class="invalid-feedback" style="display: block;">
+                                    <strong>{{ $errors->first('users.*') }}</strong>
+                                </div>
+                                @endif
                             
                         </div>
                         <div class="card-footer">

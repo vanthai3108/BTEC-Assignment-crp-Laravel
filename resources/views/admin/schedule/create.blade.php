@@ -3,7 +3,7 @@
 @section('title', 'Admin | Create course')
 
 @section('content_header')
-    <a href="{{ route('admin.courses.show', $course->id) }}" class="btn btn-info">Go Back</a>
+    <a href="{{ route('admin.schedules.index') }}" class="btn btn-info">Go Back</a>
     {{-- <h1>Add new campus</h1> --}}
 @stop
 
@@ -73,6 +73,15 @@
                         </div> --}}
                         {{-- <date-component></date-component> --}}
                         <m-date-picker></m-date-picker>
+                        @if ($errors->has('dates'))
+                                <div class="invalid-feedback" style="display: block;">
+                                    <strong>{{ $errors->first('dates') }}</strong>
+                                </div>
+                                @elseif($errors->has('dates.*'))
+                                <div class="invalid-feedback" style="display: block;">
+                                    <strong>{{ $errors->first('dates.*') }}</strong>
+                                </div>
+                                @endif
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-info col col-12">Save</button>

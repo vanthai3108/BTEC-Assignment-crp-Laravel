@@ -25,7 +25,8 @@ class AddTraineeRequest extends FormRequest
     public function rules()
     {
         return [
-            'users' => ['required']
+            'users' => ['required', 'array'],
+            'users.*' => ['required', 'exists:users,id']
         ];
     }
 

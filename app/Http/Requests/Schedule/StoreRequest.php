@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Schedule;
 
+use App\Models\Course;
 use Illuminate\Foundation\Http\FormRequest;
+use PHPUnit\Framework\Constraint\Count;
 
 class StoreRequest extends FormRequest
 {
@@ -23,12 +25,17 @@ class StoreRequest extends FormRequest
      */
     public function rules()
     {
+        $course = Course::where('id', $this->course_id)->first();
         return [
             'course_id' => ['required', 'exists:courses,id'],  
             'shift_id' => ['required', 'exists:shifts,id'],  
             'location_id' => ['required', 'exists:locations,id'],  
             'date' => ['date', 'after:yesterday'],
-            'dates' => ['required']
+            'dates' => ['required', 'array'],
+            'dates.*' => ['required', 'date', 
+                'after_or_equal:'.date('Y-m-d', strtotime($course->start_date)),
+                'before_or_equal:'.date('Y-m-d', strtotime($course->end_date)),
+            ]
         ];
     }
 

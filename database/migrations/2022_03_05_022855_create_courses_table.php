@@ -19,6 +19,8 @@ class CreateCoursesTable extends Migration
             $table->foreignId('class_id')->nullable()->constrained('classses')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('semester_id')->nullable()->constrained('semesters')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('trainer_id')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
+            $table->date('start_date');
+            $table->date('end_date');
             $table->boolean('status')->default(1);
             $table->timestamps();
             $table->softDeletes();

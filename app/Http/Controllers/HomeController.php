@@ -8,6 +8,7 @@ use App\Models\AppConst;
 use App\Models\Course;
 use App\Models\Schedule;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -117,6 +118,19 @@ class HomeController extends Controller
         return view('user.myschedule.list', compact('schedules'));
     }
 
+    public function attendanceView(Schedule $schedule)
+    {
+        $attendance = Schedule::with(['users'=> function ($q) {
+            $q->orderBy('schedule_user.status', 'asc')
+                ->orderBy('code', 'asc');
+        }])
+        ->whereHas('users', function (Builder $query) use ($schedule) {
+            $query->where('schedule_id', $schedule->id);      
+        })
+        ->first();
+            return view('user.mycourse.attendance_view', compact('attendance'));
+    }
+
     public function attendance(Schedule $schedule)
     {
         $attendanceStatus = DB::table('schedule_user')->where('schedule_id', $schedule->id)->count();
@@ -157,6 +171,7 @@ class HomeController extends Controller
 
     public function attendanceEdit(Schedule $schedule)
     {
+        $attendanceStatus = DB::table('schedule_user')->where('schedule_id', $schedule->id)->count();
         $attendance = Schedule::with(['users'=> function ($q) {
                                     $q->orderBy('schedule_user.status', 'asc')
                                         ->orderBy('code', 'asc');
@@ -165,7 +180,7 @@ class HomeController extends Controller
                                     $query->where('schedule_id', $schedule->id);      
                                 })
                                 ->first();
-        if($schedule->date == now()->format('Y-m-d') && $schedule->course->trainer->id == Auth::user()->id) {
+        if($attendanceStatus > 0 && $schedule->date == now()->format('Y-m-d') && $schedule->course->trainer->id == Auth::user()->id) {
             return view('user.myschedule.attendance_edit', compact('attendance'));
         }
         abort(404);
@@ -212,7 +227,7 @@ class HomeController extends Controller
 
     public function gradeCourseHandle(Course $course, Request $request)
     {
-        if($course->status) {
+        if(Carbon::now()->subDays(14)->format('Y-m-d') <= $course->end_date) {
             $userAttendances = $request->except('_token');
             foreach($userAttendances as $key => $value) {
                 $status = 0;

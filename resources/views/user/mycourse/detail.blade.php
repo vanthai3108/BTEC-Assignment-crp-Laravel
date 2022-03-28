@@ -27,6 +27,65 @@
                 </h3>
             </div>
             @endif
+            @if(Auth::user()->id == 2)
+            <div class="card">
+                <div class="card-header bg-info">
+                    <h3 class="card-title"><i class="fas fa-fw fa-lg fa-calendar-check"></i> Attendance history
+                        <span class="right badge bg-pink">Absent: {{$absents}}/{{count($attendances)}} ({{$absentsPercent}}%)</span>
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body" style="display: block;">
+                    <table class="table table-striped projects">
+                        <thead>
+                            <tr class="bg-olive">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Date</th>
+                                <th class="text-center">Shift</th>
+                                <th class="text-center">Location</th>
+                                {{-- <th class="text-center">Marked by</th> --}}
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Action</th>
+                                {{-- <th class="text-center">Note</th> --}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($schedules as $schedule)
+                                @php
+                                    $attendenceStatus = DB::table('schedule_user')->where('schedule_id', $schedule->id)->count();
+                                @endphp
+                                <tr>
+                                    <td class="text-center align-middle">{{ $loop->iteration }}</td>
+                                    <td class="align-middle text-center">{{ date('D - d/m/Y', strtotime($schedule->date)) }}</td>
+                                    <td class="align-middle text-center">
+                                        {{ $schedule->shift->name }}
+                                        ({{ $schedule->shift->start_time }} - {{ $schedule->shift->end_time }})
+                                    </td>
+                                    <td class="align-middle text-center">{{ $schedule->location->room }} - {{ $schedule->location->building }}</td>
+                                    @if($attendenceStatus > 0)
+                                        <td class="text-center align-middle text-success">Attended</td>
+                                        <td class="text-center align-middle">
+                                            <a href="{{ route('my_course.attendance_view', $schedule->id) }}">View</a>
+                                        </td>
+                                    @else
+                                        <td class="text-center align-middle"> - </td>
+                                        <td class="text-center align-middle"> - </td>
+                                    @endif
+                                    
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <ul class="pagination pagination-sm m-0 justify-content-center">
+                        {{-- {{ $attendances->links('vendor.pagination.custom-detail', ['psecond' => $users->links()->paginator]) }} --}}
+                    </ul>
+                </div>
+            </div>
+            @endif
             @if(Auth::user()->id != 2)
             <div class="card">
                 <div class="card-header bg-info">

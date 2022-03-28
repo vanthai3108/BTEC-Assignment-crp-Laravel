@@ -91,7 +91,26 @@
                                     </div>
                                 @endif
                             </div>
-                           
+                            <div class="form-group">
+                                <label for="start_date">Start date:</label>
+                                <input type="date" id="datemul" class="form-control {{ $errors->has('start_date') ? 'is-invalid' : '' }}" 
+                                    id="start_date" name="start_date" value="{{ old('start_date') ? old('start_date', date('Y-m-d')) : date('Y-m-d', strtotime($course->start_date)) }}" multiple>
+                                @if ($errors->has('start_date'))
+                                    <div class="invalid-feedback">
+                                        <strong>{{ $errors->first('start_date') }}</strong>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label for="end_date">End date:</label>
+                                <input type="date" id="datemul" class="form-control {{ $errors->has('end_date') ? 'is-invalid' : '' }}" 
+                                    id="end_date" name="end_date" value="{{  old('end_date') ? old('end_date', date('Y-m-d')) : date('Y-m-d', strtotime($course->end_date)) }}" multiple>
+                                @if ($errors->has('end_date'))
+                                    <div class="invalid-feedback">
+                                        <strong>{{ $errors->first('end_date') }}</strong>
+                                    </div>
+                                @endif
+                            </div>
                             <div class="form-group">
                                 <label for="status">Status:</label>
                                 <select class="form-control" id="status" name="status">

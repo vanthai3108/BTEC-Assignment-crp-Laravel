@@ -46,9 +46,11 @@
     </div>
 @stop
 @section('plugins.Sweetalert2', true)
-@section ('plugins.ChartJS' , true )
+{{-- @section('plugins.DataLabels', true) --}}
+{{-- @section ('plugins.ChartJS' , true ) --}}
 @section('adminlte_js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
     @stack('js')
     
     <script>
@@ -82,8 +84,9 @@
         Chart.defaults.global.defaultFontFamily = 'Lato';
         Chart.defaults.global.defaultFontSize = 18;
         Chart.defaults.global.defaultFontColor = '#777';
-
+        var value = [20, 15];
         var massPopChart = new Chart(myChart1, {
+        // plugins: [ChartDataLabels],
         type:chartType, // bar, horizontalBar, pie, line, doughnut, radar, polarArea
         data:{
             labels: dataLables,
@@ -98,6 +101,7 @@
             hoverBorderColor:'#000'
             }]
         },
+        // plugins: [ChartDataLabels],
         options:{
             // title:{
             // display:true,
@@ -121,7 +125,22 @@
             }
             },
             tooltips:{
-            enabled:true
+                enabled:true
+            },
+            plugins: {
+                datalabels: {
+                formatter: (value, myChart1) => {
+                  let sum = 0;
+                  let dataArr = myChart1.chart.data.datasets[0].data;
+                  console.log(dataArr);
+                  dataArr.map(dataValues => {
+                      sum += dataValues;
+                  });
+                  let percentage = (value*100 / sum).toFixed(2)+"%";
+                  return percentage;
+                },
+                color: '#fff',
+                }
             }
         }
         });
