@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Test | Add new
+Test | Edit
 @endsection
 
 @section('content')
@@ -11,22 +11,22 @@ Test | Add new
         <div class="col col-12">
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title">Add new test</h3>
+                    <h3 class="card-title">Edit test: {{$test->name}}</h3>
                 </div>
-                <form action="{{route('tests.store')}}" method="POST">
+                <form action="{{route('tests.update', $test->id)}}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">Test name:</label>
                             <input type="text" class="form-control" 
-                                    id="name" name="name" value="" placeholder="Enter test name" required>
+                                    id="name" name="name" value="{{$test->name}}" placeholder="Enter test name" required>
                         </div>
                         <test-component></test-component>
                     </div>
                     {{-- <div class="card-body">
                         
                     </div> --}}
-                    
                     <div class="card-footer">
                         <button type="submit" class="btn col col-12" style="background-color: #17a2b8">Save</button>
                     </div>

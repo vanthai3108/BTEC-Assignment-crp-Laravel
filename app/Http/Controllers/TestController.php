@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AppConst;
+use App\Models\Question;
 use App\Models\Test;
+use Facade\Ignition\QueryRecorder\Query;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TestController extends Controller
 {
@@ -14,7 +18,13 @@ class TestController extends Controller
      */
     public function index()
     {
-        //
+        if(Auth::user()->role_id == AppConst::ROLE_TRAINER) {
+            $tests = Test::where('author_id', Auth::user()->id)->get();
+        } else {
+            // $tests = Test::whereHas('courses', function())
+            // ->get();
+        }
+        return view('user.test.list', compact('tests'));
     }
 
     /**
@@ -24,7 +34,9 @@ class TestController extends Controller
      */
     public function create()
     {
-        //
+        $a = 5;
+
+        return view('user.test.create', compact('a'));
     }
 
     /**
@@ -35,7 +47,25 @@ class TestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $data = $request->all();
+        $test = new Test();
+        $test->fill([
+            'name' => $request->name,
+            'author_id' => Auth::user()->id,
+        ]);
+        $test->save();
+        if($request->questions) {
+            foreach ($request->questions as $item) {
+                $question = new Question();
+                $question->fill([
+                    'content' => $item,
+                    'test_id' => $test->id,
+                ]);
+                $question->save();
+            }
+        }
+        return redirect()->route('tests.index')
+                            ->with('success', __('message.test.add_success'));
     }
 
     /**
@@ -46,7 +76,7 @@ class TestController extends Controller
      */
     public function show(Test $test)
     {
-        //
+        return response()->json($test->load('questions'));
     }
 
     /**
@@ -57,7 +87,7 @@ class TestController extends Controller
      */
     public function edit(Test $test)
     {
-        //
+        return view('user.test.edit', compact('test'));
     }
 
     /**
@@ -69,6 +99,24 @@ class TestController extends Controller
      */
     public function update(Request $request, Test $test)
     {
+        $test->fill([
+            'name' => $request->name,
+            // 'author_id' => Auth::user()->id,
+        ]);
+        $test->save();
+        Question::where('test_id', $test->id)->delete();
+        if($request->questions) {
+            foreach ($request->questions as $item) {
+                $question = new Question();
+                $question->fill([
+                    'content' => $item,
+                    'test_id' => $test->id,
+                ]);
+                $question->save();
+            }
+        }
+        return redirect()->route('tests.index')
+                            ->with('success', __('message.test.add_success'));
         //
     }
 

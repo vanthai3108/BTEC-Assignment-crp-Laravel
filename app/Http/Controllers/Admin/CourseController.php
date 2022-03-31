@@ -15,6 +15,7 @@ use App\Models\Schedule;
 use App\Models\Semester;
 use App\Models\Shift;
 use App\Models\Subject;
+use App\Models\Test;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -124,7 +125,8 @@ class CourseController extends Controller
                         ->where('course_id', $course->id)
                         ->select('status', DB::raw('count(*) as total'))
                         ->groupBy('status')->get();
-        // dd($grades);
+        // dd($grades)
+        // $tests = Test::whereHas('course_id');
         return view('admin.course.detail', compact('course', 'users', 'schedules', 'grades'));
     }
 

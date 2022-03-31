@@ -6,6 +6,7 @@ use App\Http\Requests\BaseIndexRequest;
 use App\Http\Requests\BaseScheduleRequest;
 use App\Models\AppConst;
 use App\Models\Course;
+use App\Models\CourseTest;
 use App\Models\Schedule;
 use App\Models\User;
 use Carbon\Carbon;
@@ -85,7 +86,8 @@ class HomeController extends Controller
         $check = false;
         $absentsPercent = count($attendances) ? round($absents/count($attendances), 2)*100 : 0; 
 
-        return view('user.mycourse.detail', compact('course', 'users', 'attendances', 'schedules', 'absents', 'absentsPercent', 'check'));
+        $tests = CourseTest::where('course_id', $course->id)->orderBy('date', 'DESC')->orderBy('start_time')->get();
+        return view('user.mycourse.detail', compact('course', 'users', 'attendances', 'schedules', 'absents', 'absentsPercent', 'check', 'tests'));
     }
 
     public function mySchedule(BaseScheduleRequest $request)

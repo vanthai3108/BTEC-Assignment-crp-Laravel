@@ -85,4 +85,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Schedule::class, 'schedule_user', 'user_id', 'schedule_id')
                     ->withPivot(['trainer_id','status', 'note'])->withTimestamps();
     }
+
+    public function courseTest()
+    {
+        return $this->belongsToMany(CourseTest::class, 'test_user', 'user_id', 'test_course_id')
+                    ->withPivot(['exam','submit', 'result'])->withTimestamps();
+    }
 }
