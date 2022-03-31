@@ -250,7 +250,10 @@ class CourseController extends Controller
         ->orderBy('campus_id', 'DESC')
         ->get();
         // dd($users);
-        return view('admin.user.static', compact('users'));
+
+        $userGrades = User::join('course_user', 'users.id', '=', 'course_user.user_id')->get();
+        // dd($userGrades);
+        return view('admin.course.static', compact('users', 'userGrades'));
     }
 
     public function gradeCourse(Course $course)

@@ -34,7 +34,7 @@ Test list
                 <tbody>
                     @foreach($tests as $test)
                         <tr>
-                            <td class="text-center align-middle">{{ $loop->iteration }}</td>
+                            <td class="text-center align-middle">{{($tests->currentPage() - 1)  * $tests->perpage() + $loop->iteration }}</td>
                             <td class="align-middle text-center">{{ $test->name }}</td>
                             <td class="text-center align-middle">
                                 <a href="{{ route('tests.edit', $test->id) }}" class="btn btn-warning">
@@ -45,6 +45,9 @@ Test list
                     @endforeach
                 </tbody>
             </table>
+            <ul class="pagination pagination-sm m-0 justify-content-center">
+                {{ $tests->links('vendor.pagination.custom-basic-admin', ['params' => $params]) }}
+            </ul>
         </div>
     </div>
     @endif

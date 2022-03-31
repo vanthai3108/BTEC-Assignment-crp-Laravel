@@ -98,11 +98,11 @@
                                         </td>
                                     @elseif(($test->date > now()->format('Y-m-d') || ($test->date == now()->format('Y-m-d') && now()->format('H:i:s') <= $test->end_time && now()->format('H:i:s') <= $test->start_time)) && Auth::user()->role_id==2)
                                         <td class="align-middle text-center text-primary">
-                                            Delete
+                                            <a href="{{ route('my_course.course_test_delete', $test->id)}}">Delete</a>
                                         </td>
                                     @elseif(($test->date < now()->format('Y-m-d') || ($test->date == now()->format('Y-m-d') && now()->format('H:i:s') > $test->start_time)) && Auth::user()->role_id==2)
                                         <td class="align-middle text-center text-primary">
-                                            View Results
+                                            <a href="{{ route('my_course.course_test_result', $test->id)}}">View result</a>
                                         </td>
                                     @else
                                     <td class="align-middle text-center text-danger">

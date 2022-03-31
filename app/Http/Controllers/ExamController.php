@@ -9,6 +9,7 @@ use App\Models\CourseTest;
 use App\Models\Question;
 use App\Models\Test;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -102,7 +103,8 @@ class ExamController extends Controller
                 $index++;
             }
         }
-        $totalQuestion =  $question = Question::where('test_id', $courseTest->id)->count();
+        $totalQuestion = Question::where('test_id', $courseTest->test_id)->count();
+        // dd($totalQuestion)
         $result = $count."/".$totalQuestion;
         $user =  User::where('id', $userId)->first();
         $user->courseTest()->attach([
@@ -112,23 +114,39 @@ class ExamController extends Controller
     }
 
     public function result(CourseTest $courseTest) {
-        $test = Test::where('id', $courseTest->test_id)->first();
-        $userTest = DB::table('course_user')->where([
-            'course_id' => $courseTest->course_id,
-            'user_id' => Auth::user()->id,
-        ])->count();
-        if ($courseTest->date == now()->format('Y-m-d') 
-            && now()->format('H:i:s') <= $courseTest->end_time 
-            && now()->format('H:i:s') >= $courseTest->start_time 
-            && $userTest > 0 ) { 
-                $result = DB::table('test_user')->where([
-                    'user_id' => Auth::user()->id,
-                    'test_course_id' => $courseTest->id
-                ])->first();
+        if(Auth::user()->role_id == AppConst::ROLE_TRAINEE) {
+            $test = Test::where('id', $courseTest->test_id)->first();
+            $userTest = DB::table('course_user')->where([
+                'course_id' => $courseTest->course_id,
+                'user_id' => Auth::user()->id,
+            ])->count();
+            $check = DB::table('test_user')->where([
+                'user_id' => Auth::user()->id,
+                'test_course_id' => $courseTest->id
+            ])->count();
+            if ($courseTest->date == now()->format('Y-m-d') 
+                && now()->format('H:i:s') <= $courseTest->end_time 
+                && now()->format('H:i:s') >= $courseTest->start_time 
+                && $userTest > 0 && $check > 0 ) { 
+                    $result = DB::table('test_user')->where([
+                        'user_id' => Auth::user()->id,
+                        'test_course_id' => $courseTest->id
+                    ])->first();
 
-                return view('user.test.coursetest_result', compact('result', 'test', 'courseTest'));
+                    return view('user.test.coursetest_result', compact('result', 'test', 'courseTest'));
+            } else {
+                abort(404);
+            }
+        } else {
+            $courseTest->load('users');
+            $users = User::with('courses')
+                            ->whereHas('courses', function (Builder $query) use ($courseTest) {
+                                $query->where('course_id', $courseTest->course_id);
+                            })->get();
+            // dd($users, $courseTest);
+            return view('user.test.coursetest_result_trainer', compact('users', 'courseTest'));
         }
-        abort(404);
+        
     }
 
     /**
@@ -160,8 +178,16 @@ class ExamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(CourseTest $courseTest)
     {
-        //
+        // dd('ok');
+        if (($courseTest->date > now()->format('Y-m-d') || 
+        ($courseTest->date == now()->format('Y-m-d') && now()->format('H:i:s') <= $courseTest->end_time && 
+        now()->format('H:i:s') <= $courseTest->start_time)) && Auth::user()->role_id==AppConst::ROLE_TRAINER) {
+            // dd('ok');
+            $courseTest->delete();
+            return redirect()->back()->with('success', __('message.course_test.delete_success'));
+        }
+        abort(404);
     }
 }

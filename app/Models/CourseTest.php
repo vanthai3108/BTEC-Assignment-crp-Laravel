@@ -26,5 +26,11 @@ class CourseTest extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'test_user', 'test_course_id', 'user_id')
+                    ->withPivot(['exam','submit', 'result'])->withTimestamps();
+    }
     
 }
