@@ -18,8 +18,14 @@ window.Vue = require('vue').default;
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+// import mDatePicker from './components/multiDatePicker';
 
+// Vue.use(mDatePicker);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('date-component', require('./components/DateComponent.vue').default);
+Vue.component('m-date-picker', require('./components/multiDatePicker.vue').default);
+Vue.component('trainee-selector', require('./components/TraineeSelector.vue').default);
+Vue.component('test-component', require('./components/TestComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -32,6 +32,10 @@ Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => ['auth', 'block'
     Route::resource('/classes', 'Admin\ClassController');
     Route::resource('/shifts', 'Admin\ShiftController');
     Route::resource('/locations', 'Admin\LocationController');
+    Route::get('/schedules/{schedule}/attendance', 'Admin\ScheduleController@attendance')->name('schedules.attendance');
+    Route::post('/schedules/{schedule}/attendance', 'Admin\ScheduleController@attendanceHandle')->name('schedules.attendance_handle');
+    Route::get('/schedules/{schedule}/attendance/edit', 'Admin\ScheduleController@attendanceEdit')->name('schedules.attendance_edit');
+    Route::post('/schedules/{schedule}/attendance/edit', 'Admin\ScheduleController@attendanceEditHandle')->name('schedules.attendance_edit_handle');
     Route::resource('/schedules', 'Admin\ScheduleController');
     Route::get('/courses/{course}/add_schedule', 'Admin\CourseController@addScheduleView')->name('courses.add_schedule_view');
     // Route::post('/courses/{course}/add_schedule', 'Admin\CourseController@addSchedule')->name('courses.add_schedule');
@@ -39,6 +43,9 @@ Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => ['auth', 'block'
     Route::post('/courses/{course}/add_trainee', 'Admin\CourseController@addTrainee')->name('courses.add_trainee');
     Route::delete('/courses/{course}/{user}/', 'Admin\CourseController@deleteTrainee')->name('courses.delete_trainee');
     Route::get('/courses/static', 'Admin\CourseController@static')->name('courses.static');
+    Route::get('/courses/{course}/trainees/', 'Admin\CourseController@trainees')->name('courses.trainees');
+    Route::get('/courses/{course}/grading', 'Admin\CourseController@gradeCourse')->name('courses.grade');
+    Route::post('/courses/{course}/grading', 'Admin\CourseController@gradeCourseHandle')->name('courses.grade_handle');
     Route::resource('/courses', 'Admin\CourseController');
 });
 
@@ -49,12 +56,19 @@ Route::group(['middleware' => ['auth', 'block', 'role:trainer']], function(){
     Route::post('/my_schedule/{schedule}/attendance/edit', 'HomeController@attendanceEditHandle')->name('my_schedule.attendance_edit_handle');
     Route::get('/my_course/{course}/grading', 'HomeController@gradeCourse')->name('my_course.grade');
     Route::post('/my_course/{course}/grading', 'HomeController@gradeCourseHandle')->name('my_course.grade_handle');
+    Route::get('/my_course/{schedule}/attendance_view', 'HomeController@attendanceView')->name('my_course.attendance_view');
+    Route::resource('/tests', 'TestController');
+    Route::get('/my_course/{course}/add_test', 'ExamController@create')->name('my_course.add_test_view');
+    Route::post('/my_course/add_test', 'ExamController@store')->name('my_course.add_test');
 });
 
 Route::group(['middleware' => ['auth', 'block']], function(){
     // Route::get('/', 'HomeController@index')->name('index');
     Route::get('/', 'HomeController@myCourse')->name('my_course.list');
     Route::get('/my_course/{course}', 'HomeController@showCourse')->name('my_course.show');
+    Route::get('/my_course/test/{courseTest}', 'ExamController@show')->name('my_course.course_test');
+    Route::post('/my_course/test/{courseTest}/submit', 'ExamController@submit')->name('my_course.course_test_submit');
+    Route::get('/my_course/test/{courseTest}/result', 'ExamController@result')->name('my_course.course_test_result');
     Route::get('/my_schedule', 'HomeController@mySchedule')->name('my_schedule.list');
     Route::get('profile/edit_password', 'ProfileController@editPassword')->name('profile.edit_password');
     Route::post('profile/edit_password', 'ProfileController@updatePassword')->name('profile.update_password');

@@ -18,8 +18,8 @@
                     <form action="{{route('admin.courses.add_trainee',$course->id)}}" method="POST">
                         @csrf
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="user">User:</label>
+                            {{-- <div class="form-group">
+                                <label for="user">Trainee:</label>
                                 <select class="form-control" id="user" name="user">
                                     @foreach ($trainees as $user)
                                         <option value="{{ $user->id }}"
@@ -31,12 +31,19 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                @if ($errors->has('user'))
-                                    <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('user') }}</strong>
-                                    </div>
+                                
+                                
+                            </div> --}}
+                            <trainee-selector></trainee-selector>
+                                @if ($errors->has('users'))
+                                <div class="invalid-feedback" style="display: block;">
+                                    <strong>{{ $errors->first('users') }}</strong>
+                                </div>
+                                @elseif($errors->has('users.*'))
+                                <div class="invalid-feedback" style="display: block;">
+                                    <strong>{{ $errors->first('users.*') }}</strong>
+                                </div>
                                 @endif
-                            </div>
                             
                         </div>
                         <div class="card-footer">
@@ -51,9 +58,9 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+
 @stop
 
 @section('js')
-
+<script defer src="{{ mix('js/app.js') }}"></script>
 @stop

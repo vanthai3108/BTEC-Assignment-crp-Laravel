@@ -113,6 +113,7 @@
                         <th class="text-center">Subject</th>
                         <th class="text-center">Trainer</th>
                         <th class="text-center">Semester</th>
+                        <th class="text-center">Time</th>
                         <th class="text-center">Status</th>
                         <th colspan="3" class="text-center">Action</th>
                     </tr>
@@ -125,6 +126,7 @@
                             <td class="align-middle">{{ $course->subject->name }}</td>
                             <td class="align-middle">{{ $course->trainer->name }}</td>
                             <td class="align-middle">{{ $course->semester->name }}</td>
+                            <td class="align-middle">From {{ date('d/m/Y', strtotime($course->start_date)) }} to {{date('d/m/Y', strtotime($course->end_date))}}</td>
                             @if ($course->status)
                                 <td class="align-middle text-center">
                                     <span class="right badge badge-success">Active</span>
@@ -134,13 +136,13 @@
                                     <span class="right badge badge-danger">Disactive</span>
                                 </td>
                             @endif
-                            <td class="text-center align-middle"><a href="{{ route('admin.courses.show', $course->id) }}" class="btn btn-info"><i class="fas fa-lg fa-info-circle"></i> Details</a></td>
-                            <td class="text-center align-middle"><a href="{{ route('admin.courses.edit', $course->id) }}" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a></td>
+                            <td class="text-center align-middle"><a href="{{ route('admin.courses.show', $course->id) }}" class="btn btn-info"><i class="fas fa-lg fa-info-circle"></i></a></td>
+                            <td class="text-center align-middle"><a href="{{ route('admin.courses.edit', $course->id) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a></td>
                             <td class="text-center align-middle">
                                 <form id="deleteElement-{{$course->id}}" action="{{ route('admin.courses.destroy',$course->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" onClick="deleteAction(event, {{ $course->id }})" class="btn btn-danger"><i class="fas fa-trash text-white"></i> Delete</button>
+                                    <button type="submit" onClick="deleteAction(event, {{ $course->id }})" class="btn btn-danger"><i class="fas fa-trash text-white"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -151,14 +153,14 @@
         <!-- /.card-body -->
         <div class="card-footer clearfix">
             <ul class="pagination pagination-sm m-0 justify-content-center">
-                {{ $courses->links('vendor.pagination.custom-basic') }}
+                {{ $courses->links('vendor.pagination.custom-basic-admin', ['params' => $params]) }}
             </ul>
         </div>
     </div>
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+
 @stop
 
 

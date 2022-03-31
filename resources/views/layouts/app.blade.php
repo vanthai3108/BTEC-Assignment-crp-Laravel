@@ -35,6 +35,9 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ route('my_schedule.list') }}" style="font-size:16px; color:white;"><i class="fas fa-lg fa-calendar-check"></i> Schedules</a>
                     </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ route('tests.index') }}" style="font-size:16px; color:white;"><i class="fas fa-lg fa-question-circle"></i> Tests</a>
+                    </li>
                     
                 </ul>
                 <!-- Right Side Of Navbar -->

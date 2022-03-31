@@ -3,7 +3,7 @@
 @section('title', 'Admin | Create course')
 
 @section('content_header')
-    <a href="{{ route('admin.courses.show', $course->id) }}" class="btn btn-info">Go Back</a>
+    <a href="{{ route('admin.schedules.index') }}" class="btn btn-info">Go Back</a>
     {{-- <h1>Add new campus</h1> --}}
 @stop
 
@@ -57,16 +57,31 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="date">Date:</label>
-                            <input type="date" class="form-control {{ $errors->has('date') ? 'is-invalid' : '' }}" 
-                                id="date" name="date" value="{{ old('date', date('Y-m-d')) }}">
+                            <input type="date" id="datemul" class="form-control {{ $errors->has('date') ? 'is-invalid' : '' }}" 
+                                id="date" name="date" value="{{ old('date', date('Y-m-d')) }}" multiple>
                             @if ($errors->has('date'))
                                 <div class="invalid-feedback">
                                     <strong>{{ $errors->first('date') }}</strong>
                                 </div>
                             @endif
-                        </div>
+                        </div> --}}
+                        {{-- <div class="input-group date form-group" id="datepicker">
+                            <input type="text" class="form-control" id="Dates" name="Dates" placeholder="Select days" required />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i><span class="count"></span></span>
+                        </div> --}}
+                        {{-- <date-component></date-component> --}}
+                        <m-date-picker></m-date-picker>
+                        @if ($errors->has('dates'))
+                                <div class="invalid-feedback" style="display: block;">
+                                    <strong>{{ $errors->first('dates') }}</strong>
+                                </div>
+                                @elseif($errors->has('dates.*'))
+                                <div class="invalid-feedback" style="display: block;">
+                                    <strong>{{ $errors->first('dates.*') }}</strong>
+                                </div>
+                                @endif
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-info col col-12">Save</button>
@@ -81,9 +96,9 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+
 @stop
 
 @section('js')
-
+<script defer src="{{ mix('js/app.js') }}"></script>
 @stop

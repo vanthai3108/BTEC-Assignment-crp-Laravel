@@ -394,10 +394,16 @@ return [
                     'url'  => 'admin/courses/create',
                 ],
                 [
-                    'text' => 'Course Statistics',
+                    'text'    => 'Manage attendances',
+                    'icon'    => 'fas fa-fw fa-calendar-check',
+                    'url'  => 'admin/schedules',
+                ],
+                [
+                    'text' => 'Course statistics',
                     'icon'    => 'fas fa-fw fa-sm fa-chart-bar',
                     'url'  => 'admin/courses/static',
                 ],
+                
             ],
         ],
         [

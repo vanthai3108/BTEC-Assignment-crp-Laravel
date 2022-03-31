@@ -25,6 +25,13 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
+            <div class="card">
+                <h3 class="card-title p-2">
+                    <a href="{{ route('admin.courses.grade', $course->id) }}" class="text-success">
+                        <i class="fas fa-plus text-success"></i> Grading
+                    </a>
+                </h3>
+            </div>
             {{-- <div class="card {{ $users->currentPage() != 1 ? '': 'collapsed-card'}}"> --}}
             <div class="card">
                 <div class="card-header bg-info">
@@ -136,19 +143,28 @@
                         </thead>
                         <tbody>
                             @foreach($schedules as $schedule)
+                                @php
+                                    $attendenceStatus = DB::table('schedule_user')->where('schedule_id', $schedule->id)->count();
+                                @endphp
                                 <tr>
                                     <td class="text-center align-middle">{{ ($schedules->currentPage() - 1)  * $schedules->perpage() + $loop->iteration }}</td>
                                     <td class="align-middle text-center">{{ date('d/m/Y', strtotime($schedule->date)) }}</td>
                                     <td class="align-middle text-center">{{ $schedule->shift->name }}</td>
                                     <td class="align-middle text-center">{{ $schedule->shift->start_time }} - {{ $schedule->shift->end_time }}</td>
                                     <td class="align-middle text-center">{{ $schedule->location->room }} - {{ $schedule->location->building }}</td>
-                                    <td class="text-center align-middle">
-                                        <form id="deleteElement-{{$schedule->id}}" action="{{ route('admin.schedules.destroy',$schedule->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onClick="deleteAction(event, {{ $schedule->id }})" class="btn btn-danger"><i class="fas fa-trash text-white"></i> Remove</button>
-                                        </form>
-                                    </td>
+                                    @if($attendenceStatus > 0)
+                                        <td class="text-center align-middle">
+                                            -
+                                        </td>
+                                    @else
+                                        <td class="text-center align-middle">
+                                            <form id="deleteElement-{{$schedule->id}}" action="{{ route('admin.schedules.destroy',$schedule->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onClick="deleteAction(event, {{ $schedule->id }})" class="btn btn-danger"><i class="fas fa-trash text-white"></i> Remove</button>
+                                            </form>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>
@@ -158,6 +174,54 @@
                     </ul>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header bg-info">
+                    <h3 class="card-title">
+                        <i class="fas fa-fw fa-lg fa-chart-line"></i> 
+                        The chart compares the rate of students passing the subject and failing the subject
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <div class="chart row justify-content-center">
+                            <canvas id="myChart1" class="col-8"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                </div>
+            </div>
+            @php
+
+            $total = $users->links()->paginator->total();
+            
+            $dataLabels = [];
+            $dataValues = [];
+            $dataColors = [];
+            foreach($grades as $grade) {
+                if ($grade->status) {
+                    $dataLabels[] = "Passed";
+                    $dataColors[] = "#28a745";
+                    // $dataValues[] = $grade->total." (".(round($grade->total/$total, 2)*100)."%)";
+                } elseif (is_null($grade->status)) {
+                    $dataLabels[] = "Studying";
+                    $dataColors[] = "#3498db";
+                    // $dataValues[] = $grade->total." (".(round($grade->total/$total, 2)*100)."%)";
+                }else {
+                    $dataLabels[] = "Failed";
+                    $dataColors[] = "#dc3545";
+                    // $dataValues[] = $grade->total." (".(round($grade->total/$total, 2)*100)."%)";
+                }
+                $dataValues[] = $grade->total;
+            }
+            // dd($dataLabels, $dataValues, $dataColors);
+            @endphp 
         </div>
         <!-- /.card-body -->
         <div class="card-footer clearfix">
@@ -169,5 +233,19 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+
+@stop
+@section('js')
+    <script>
+        console.log('ok');
+         // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+        makeChart(
+            "myChart1", 
+            "pie", 
+            {!! json_encode($dataLabels) !!}, 
+            {!! json_encode($dataValues) !!}, 
+            {!! json_encode($dataColors) !!}, 
+        )
+    </script>
+
 @stop

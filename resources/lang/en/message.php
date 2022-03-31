@@ -77,7 +77,7 @@ return [
     ],
     'grade' => [
         'success' => 'You have scored successfully!',
-        'failed' => 'You have scored fail ! Maybe the course is over!'
+        'failed' => 'You have scored fail ! Maybe the course is over date!'
     ],
     'profile' => [
         'add_failed' => 'Add infomation failed! An error has occurred.',

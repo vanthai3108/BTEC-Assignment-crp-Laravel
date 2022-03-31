@@ -94,16 +94,26 @@
                                 </div>
                             @endif
                         </div>
-                        {{-- <div class="form-group">
-                            <label for="date">Date:</label>
-                            <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" 
-                                id="date" name="name" value="{{ old('name') }}" placeholder="Enter class name">
-                            @if ($errors->has('name'))
+                        <div class="form-group">
+                            <label for="start_date">Start date:</label>
+                            <input type="date" id="datemul" class="form-control {{ $errors->has('start_date') ? 'is-invalid' : '' }}" 
+                                id="start_date" name="start_date" value="{{ old('start_date', date('Y-m-d')) }}" multiple>
+                            @if ($errors->has('start_date'))
                                 <div class="invalid-feedback">
-                                    <strong>{{ $errors->first('name') }}</strong>
+                                    <strong>{{ $errors->first('start_date') }}</strong>
                                 </div>
                             @endif
-                        </div> --}}
+                        </div>
+                        <div class="form-group">
+                            <label for="end_date">End date:</label>
+                            <input type="date" id="datemul" class="form-control {{ $errors->has('end_date') ? 'is-invalid' : '' }}" 
+                                id="end_date" name="end_date" value="{{ old('end_date', date('Y-m-d')) }}" multiple>
+                            @if ($errors->has('end_date'))
+                                <div class="invalid-feedback">
+                                    <strong>{{ $errors->first('end_date') }}</strong>
+                                </div>
+                            @endif
+                        </div>
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-info col col-12">Save</button>
@@ -117,7 +127,7 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+
 @stop
 
 @section('js')

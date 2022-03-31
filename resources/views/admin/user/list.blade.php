@@ -68,7 +68,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-2  mt-2 p-0"">
+                    <div class="col-2  mt-2 p-0">
                         <div class="form-group mb-0 pt-4">
                             <a href="{{route('admin.users.index')}}" class="btn btn-block btn-default ms-auto">Clear</a>
                         </div>
@@ -167,14 +167,15 @@
         <!-- /.card-body -->
         <div class="card-footer clearfix">
             <ul class="pagination pagination-sm m-0 justify-content-center">
-                {{ $users->links('vendor.pagination.custom-basic') }}
+                {{-- {{ dd($users->links())}} --}}
+                {{ $users->links('vendor.pagination.custom-basic-admin', ['params' => $params]) }}
             </ul>
         </div>
     </div>
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+
 @stop
 
 

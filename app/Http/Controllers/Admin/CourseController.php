@@ -15,10 +15,13 @@ use App\Models\Schedule;
 use App\Models\Semester;
 use App\Models\Shift;
 use App\Models\Subject;
+use App\Models\Test;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use League\CommonMark\Extension\Table\Table;
 
 class CourseController extends Controller
 {
@@ -115,9 +118,16 @@ class CourseController extends Controller
         })->paginate(5, ['*'], 'user_page');
         $schedules = Schedule::with(['shift', 'location'])
                                 ->where('course_id', $course->id)
+                                ->orderBy('date', 'ASC')
                                 ->paginate(10, ['*'], 'schedule_page');
         // dd($users, $schedules, $request);
-        return view('admin.course.detail', compact('course', 'users', 'schedules'));
+        $grades = DB::table('course_user')
+                        ->where('course_id', $course->id)
+                        ->select('status', DB::raw('count(*) as total'))
+                        ->groupBy('status')->get();
+        // dd($grades)
+        // $tests = Test::whereHas('course_id');
+        return view('admin.course.detail', compact('course', 'users', 'schedules', 'grades'));
     }
 
     /**
@@ -175,19 +185,40 @@ class CourseController extends Controller
         return view('admin.course.addTrainee', compact('trainees', 'course'));
     }
 
+    public function trainees(Course $course, Request $request)
+    {
+        $trainees = User::where([
+                            'role_id' => AppConst::ROLE_TRAINEE,
+                            'status' => AppConst::ACTIVE
+        ])->whereDoesntHave('courses', function (Builder $query) use ($course) {
+            $query->where('course_id', '=', $course->id);
+        })->when($request->keyword, function (Builder $query) use ($request) {
+            $query->where(function (Builder $query) use ($request) {
+                $query->where('name', 'like', '%'.$request->keyword.'%')
+                        ->orWhere('email', 'like', '%'.$request->keyword.'%');
+            });
+        })
+        ->limit(10)->get();
+        return response()->json($trainees);
+    }
+
     public function addTrainee(Course $course, AddTraineeRequest $request)
     {
-        $userCount = DB::table('course_user')
+        // dd($request->all());
+        $users = $request->users;
+        foreach($users as $user) {
+            $userCount = DB::table('course_user')
                         ->where([
-                            'user_id' => $request->user,
+                            'user_id' => $user,
                             'course_id' => $course->id
                         ])->count();
-        if ($userCount == 0) {
-            $course->users()->attach($request->user);
-            return redirect()->route('admin.courses.add_trainee_view', $course->id)
-                                ->with('success', __('message.course.add_trainee_success'));
+            if ($userCount == 0) {
+                $course->users()->attach($user);
+            }
         }
-        return redirect()->back(); 
+        
+        return redirect()->route('admin.courses.add_trainee_view', $course->id)
+                                ->with('success', __('message.course.add_trainee_success'));
     }
 
     public function deleteTrainee(Course $course, User $user)
@@ -220,5 +251,38 @@ class CourseController extends Controller
         ->get();
         // dd($users);
         return view('admin.user.static', compact('users'));
+    }
+
+    public function gradeCourse(Course $course)
+    {
+        if (Auth::user()->role_id = AppConst::ROLE_ADMIN) {
+            $course->load('users');
+            $users = User::with('courses')
+                            ->whereHas('courses', function (Builder $query) use ($course) {
+                                $query->where('course_id', $course->id);
+                            })->orderBy('code', 'asc')->get();
+            return view('admin.course.grade', compact('users', 'course'));
+        }
+        abort(404);
+    }
+
+    public function gradeCourseHandle(Course $course, Request $request)
+    {
+        $userAttendances = $request->except('_token');
+        foreach($userAttendances as $key => $value) {
+            $status = 0;
+            if(str_starts_with($key, 'score') ) {
+                $user = str_replace("score", "", $key);
+                if ($value >= AppConst::PASS) {
+                    $status = 1;
+                }
+                $course->users()->detach($user);
+                $course->users()->attach(
+                    [$user => 
+                    ['status' => $status, 'score' => $value]
+                ]);
+            }
+        }
+        return redirect()->back()->with('success', __('message.grade.success'));
     }
 }
