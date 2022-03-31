@@ -65,7 +65,7 @@ Profile
                             </form>
                         @endforeach
                     </ul>
-                    <a href="{{ route('profile.create')}}" class="btn btn-block" style="background-color:#17a2b8"><b>Add new</b></a>
+                    <a href="{{ route('profile.create')}}" class="btn btn-block" style="background-color:#17a2b8"><b>Add new information</b></a>
                 </div>
             </div>
         </div>

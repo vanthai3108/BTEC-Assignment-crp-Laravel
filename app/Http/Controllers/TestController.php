@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BaseIndexRequest;
 use App\Models\AppConst;
+use App\Models\CourseTest;
 use App\Models\Question;
 use App\Models\Test;
 use Facade\Ignition\QueryRecorder\Query;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,15 +19,70 @@ class TestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(BaseIndexRequest $request)
     {
+        $params = $request->all();
         if(Auth::user()->role_id == AppConst::ROLE_TRAINER) {
-            $tests = Test::where('author_id', Auth::user()->id)->get();
+            $tests = Test::where('author_id', Auth::user()->id)
+            ->orderBy('created_at', 'DESC')
+            ->paginate($request->limit);
+            return view('user.test.list', compact('tests', 'params'));
         } else {
-            // $tests = Test::whereHas('courses', function())
-            // ->get();
+            $tests = CourseTest::whereHas('course',  function (Builder $query) {
+                $query->whereHas('users',  function (Builder $query) {
+                    $query->where('user_id', Auth::user()->id);
+                });
+            })
+            ->when($request->status == 1, function (Builder $query) {
+                $query->where(function (Builder $query) {
+                    $query->where('date', now()->format('Y-m-d'))
+                            ->where('start_time', '<=', now()->format('H:i:s'))
+                            ->where('end_time', '>=', now()->format('H:i:s'));
+                });
+            })
+            ->when($request->status == 2, function (Builder $query) {
+                $query->where(function (Builder $query) {
+                    $query->where('date', now()->format('Y-m-d'))
+                            ->where('start_time', '>=', now()->format('H:i:s'));
+                })
+                ->orWhere(function (Builder $query) {
+                    $query->where('date', '>', now()->format('Y-m-d'));
+                });
+            })
+            ->when($request->status == 3, function (Builder $query) {
+                $query->where(function (Builder $query) {
+                    $query->where('date', now()->format('Y-m-d'))
+                            ->where('end_time', '<=', now()->format('H:i:s'));
+                })
+                ->orWhere(function (Builder $query) {
+                    $query->where('date', '<', now()->format('Y-m-d'));
+                });
+            })
+            ->when($request->keyword, function (Builder $query) use ($request) {
+                $query->where(function (Builder $query) use ($request) {
+                    $query->whereHas('test', function (Builder $query) use ($request) {
+                                $query->where('name', 'like', '%'.$request->keyword.'%');
+                            })
+                            ->orWhereHas('course',  function (Builder $query) use ($request) {
+                                $query->where(function (Builder $query) use ($request) {
+                                    $query->whereHas('class', function (Builder $query) use ($request)  {
+                                        $query->where('name', 'like', '%'.$request->keyword.'%');
+                                    })
+                                    ->whereHas('subject', function (Builder $query)  use ($request) {
+                                        $query->where('name', 'like', '%'.$request->keyword.'%');
+                                    });
+                                });
+                    });
+                });
+                
+            })
+            ->orderBy('date', 'DESC')
+            ->orderBy('start_time', 'DESC')
+            ->orderBy('end_time', 'DESC')
+            ->paginate($request->limit);
+            return view('user.test.trainee_list', compact('tests', 'params'));
         }
-        return view('user.test.list', compact('tests'));
+        
     }
 
     /**

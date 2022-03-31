@@ -92,8 +92,7 @@
                                 <td class="align-middle text-center">
                                     <a href="{{ route('admin.schedules.attendance_edit', $schedule->id) }}">Edit</a>
                                 </td>
-                            @endif
-                            
+                            @endif 
                         </tr>
                     @endforeach
                 </tbody>

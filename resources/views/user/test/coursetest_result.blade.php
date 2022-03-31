@@ -10,7 +10,7 @@ Course | Test results
         <div class="col align-self-center">
             <h3>Test: {{$test->name}}</h3>
             <h5>You did it right: {{$result->result}}</h5>
-            <a href="{{ route('my_course.show', $courseTest->course_id)}}" class="btn btn-primary col col-2">Go back</a>
+            <a href="{{ route('my_course.show', $courseTest->course_id)}}" class="btn btn-primary col col-2">Go to this course</a>
         </div>
     </div>
 </div>

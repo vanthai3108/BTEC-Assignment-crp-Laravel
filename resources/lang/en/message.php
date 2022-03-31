@@ -90,5 +90,8 @@ return [
         'update_pass_success' => 'Change password successfully!',
         'update_pass_failed' => 'Change password failed! An error has occurred.',
     ],
-    'block' => 'This account has been lock!'
+    'block' => 'This account has been lock!',
+    'course_test' => [
+        'delete_success' => 'Remove test course successfully !'
+    ],
 ];
