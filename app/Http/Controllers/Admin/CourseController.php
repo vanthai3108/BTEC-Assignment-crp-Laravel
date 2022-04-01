@@ -7,6 +7,7 @@ use App\Http\Requests\BaseIndexRequest;
 use App\Http\Requests\Course\AddTraineeRequest;
 use App\Http\Requests\Course\StoreRequest;
 use App\Http\Requests\Schedule\StoreRequest as ScheduleStoreRequest;
+use App\Http\Requests\StaticRequest;
 use App\Models\AppConst;
 use App\Models\Classs;
 use App\Models\Course;
@@ -234,26 +235,45 @@ class CourseController extends Controller
         return view('admin.schedule.create', compact('course', 'shifts', 'locations'));
     }
 
-    // public function addSchedule(ScheduleStoreRequest $request)
-    // {
-    //     $schedule = new Schedule();
-    //     $schedule->fill($request->all());
-    //     $schedule->save();
-    //     return redirect()->route('admin.courses.add_schedule_view')
-    //                         ->with('success', __('message.schedule.add_success'));
-    // }
-
-    public function static()
+    public function static(StaticRequest $request)
     {
+        $params = $request->all();
+        $classes = Classs::get();
+        $subjects = Subject::get();
+        $semesters = Semester::get();
         $users = User::select('campus_id', DB::raw('count(*) as total'))
         ->groupBy('campus_id')
         ->orderBy('campus_id', 'DESC')
         ->get();
-        // dd($users);
-
-        $userGrades = User::join('course_user', 'users.id', '=', 'course_user.user_id')->get();
+        
+        $userGrades = User::join('course_user', 'users.id', '=', 'course_user.user_id')
+                            ->join('courses', 'courses.id', '=', 'course_user.course_id')
+                            ->join('classses', 'classses.id', '=', 'courses.class_id')
+                            ->join('subjects', 'subjects.id', '=', 'courses.subject_id')
+                            ->join('semesters', 'semesters.id', '=', 'courses.semester_id')
+                            ->select(DB::raw('users.name as user_name, classses.name as class_name, course_user.score, subjects.name as subject_name, semesters.name as semester_name, users.email, course_user.status'))
+                            ->when($request->class_id, function (Builder $query) use($request) {
+                                $query->where('courses.class_id', $request->class_id);
+                            })
+                            ->when($request->subject_id, function (Builder $query) use($request) {
+                                $query->where('courses.subject_id', $request->subject_id);
+                            })
+                            ->when($request->semester_id, function (Builder $query) use($request) {
+                                $query->where('courses.semester_id', $request->semester_id);
+                            })
+                            ->when($request->keyword, function (Builder $query) use($request) {
+                                $query->where(function (Builder $query) use($request) {
+                                    $query->where('users.email', 'like', '%'.$request->keyword.'%')
+                                        ->orWhere('users.name', 'like', '%'.$request->keyword.'%')
+                                        ->orWhere('classses.name', 'like', '%'.$request->keyword.'%')
+                                        ->orWhere('subjects.name', 'like', '%'.$request->keyword.'%')
+                                        ->orWhere('semesters.name', 'like', '%'.$request->keyword.'%');
+                                });
+                            })
+                            ->orderBy('course_user.score', 'DESC')
+                            ->paginate($request->limit);
         // dd($userGrades);
-        return view('admin.course.static', compact('users', 'userGrades'));
+        return view('admin.course.static', compact('users', 'userGrades', 'params', 'classes', 'subjects', 'semesters'));
     }
 
     public function gradeCourse(Course $course)
