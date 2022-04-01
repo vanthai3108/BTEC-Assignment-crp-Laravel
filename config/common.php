@@ -6,5 +6,8 @@ return [
     ],
     'schedule' => [
         'limit' => 10,
+    ],
+    'static' => [
+        'limit' => 20,
     ]
 ];
