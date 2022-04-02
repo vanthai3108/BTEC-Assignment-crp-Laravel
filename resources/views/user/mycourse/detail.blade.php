@@ -18,7 +18,7 @@
         <!-- /.card-header -->
         <div class="card-body">
             {{-- <div class="card {{ $users->currentPage() != 1 ? '': 'collapsed-card'}}"> --}}
-            @if(Auth::user()->id == 2)
+            @if(Auth::user()->role->name=='trainer')
             <div class="card-header bg-white">
                 <h3 class="card-title text-center">
                     <a href="{{ route('my_course.grade', $course->id) }}" class="text-success">
@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="card-body" style="display: block;">
-                    @if(Auth::user()->role_id == 2)
+                    @if(Auth::user()->->role->name=='trainer')
                         <div class="card-header bg-white">
                             <h3 class="card-title text-center">
                                 <a href="{{ route('my_course.add_test_view', $course->id) }}" class="text-success">
