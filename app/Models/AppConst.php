@@ -20,5 +20,5 @@ class AppConst extends Model
     const HE_SO = 1;
     const HE_SO_PRODUCT = 10;
     const CO_SO = 0;
-    const CO_SO_PRODUCT = 4;
+    const CO_SO_PRODUCT = -6;
 }
