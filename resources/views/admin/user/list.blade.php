@@ -135,7 +135,7 @@
                                 </td>
                             @endif
                             
-                            @if(Auth::user()->id != $user->id || $user->role_id != 1)
+                            @if(Auth::user()->id != $user->id || $user->role->name != 'admin')
                                 <td class="text-center align-middle">
                                 @if ($user->status)
                                     <a href="{{ route('admin.users.block', $user->id) }}" class="btn btn-secondary"><i class="fa fa-ban"></i> Block</a>
@@ -146,7 +146,7 @@
                             @else
                                 <td class="text-center align-middle text-red"> - </td>
                             @endif
-                            @if(Auth::user()->id != $user->id || $user->role_id != 1)
+                            @if(Auth::user()->id != $user->id || $user->->role->name != 'admin')
                             <td class="text-center align-middle"><a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a></td>
                             <td class="text-center align-middle">
                                 <form id="deleteElement-{{$user->id}}" action="{{ route('admin.users.destroy',$user->id) }}" method="POST">
