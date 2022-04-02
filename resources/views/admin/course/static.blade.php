@@ -19,7 +19,7 @@
         <div class="card-body">
             <form action="{{route('admin.courses.static')}}" method="GET">
                 <div class="row justify-content-end">
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-group">
                             <label>Class:</label>
                             <select class="form-control" style="width: 100%;" name="class_id">
@@ -33,7 +33,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="form-group">
                             <label>Subject:</label>
                             <select class="form-control" style="width: 100%;" name="subject_id">
@@ -58,6 +58,20 @@
                                         {{ucfirst($semester->name)}}
                                     </option>
                                 @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label>Status:</label>
+                            <select class="form-control" style="width: 100%;" name="status">
+                                <option value="">All</option>
+                                <option value="1" @if(isset($params['status']) && $params['status'] == 1) selected @endif>
+                                    Passed
+                                </option>
+                                <option value="0" @if(isset($params['status']) && $params['status'] == 0) selected @endif>
+                                    Failed
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -91,6 +105,9 @@
                 </div>
             </form>
         <div class="box box-primary">
+            <div class="text-right mb-2">
+                <a href="{{config('app.url')}}/export/static_grade{{$searchQueries}}">Export file</a>
+            </div>
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr style="background-color:#00a4c5e0;">
@@ -145,7 +162,7 @@
         </div>
     </div>
 
-    <div class="card">
+    {{-- <div class="card">
         <div class="card-header bg-info">
             <h3 class="card-title">
                 <i class="fas fa-fw fa-lg fa-chart-line"></i> 
@@ -167,7 +184,7 @@
         </div>
         
         </div>
-    </div>
+    </div> --}}
     @php
     $dataLabels = [];
     $dataValues = [];

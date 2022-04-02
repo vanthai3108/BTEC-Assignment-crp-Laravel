@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Course | Grading')
+@section('title', 'My course | Grading')
 
 @section('content_header')
     <h1>Courses</h1>
@@ -18,8 +18,13 @@
                 <form action="{{route('my_course.grade', $course->id)}}" method="POST">
                     @csrf
                     <div class="card-body">
-                        <div class="mb-3">
-                            <a class="btn btn-primary" href="{{route('my_course.show', $course->id)}}">Go Back</a>
+                        <div class="mb-3 row justify-content-center">
+                            <div class="col-6">
+                                <a class="btn btn-primary m-0" href="{{route('my_course.show', $course->id)}}">Go Back</a>
+                            </div>
+                            <div class="col-6 text-right">
+                                <a href="{{route('export.course_grade', $course->id)}}">Export file</a>
+                            </div>
                         </div>
                         <table class="table  table-striped projects">
                             <thead>

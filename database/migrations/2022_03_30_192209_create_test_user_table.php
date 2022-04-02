@@ -15,7 +15,7 @@ class CreateTestUserTable extends Migration
     {
         Schema::create('test_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('courses')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('test_course_id')->nullable()->constrained('test_course')->cascadeOnUpdate()->nullOnDelete();
             $table->string('exam');
             $table->string('submit');

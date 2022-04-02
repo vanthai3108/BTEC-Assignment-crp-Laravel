@@ -13,6 +13,7 @@ class CourseTest extends Model
         'test_id',
         'course_id',
         'date',
+        'question_limit',
         'start_time',
         'end_time',
     ];

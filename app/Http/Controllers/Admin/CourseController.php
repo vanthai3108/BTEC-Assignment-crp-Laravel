@@ -237,6 +237,11 @@ class CourseController extends Controller
 
     public function static(StaticRequest $request)
     {
+        // dd($request->getRequestUri());
+        $path = $request->getPathinfo();
+        $uri = $request->getRequestUri();
+        $searchQueries = str_replace($path, "", $uri);
+        // dd($searchQueries);
         $params = $request->all();
         $classes = Classs::get();
         $subjects = Subject::get();
@@ -261,6 +266,12 @@ class CourseController extends Controller
                             ->when($request->semester_id, function (Builder $query) use($request) {
                                 $query->where('courses.semester_id', $request->semester_id);
                             })
+                            ->when(isset($request->status) && $request->status != 1, function (Builder $query) use ($request) {
+                                $query->where('course_user.score', '<', 50);
+                            })
+                            ->when($request->status, function (Builder $query) {
+                                $query->where('course_user.score', '>=', 50);
+                            })
                             ->when($request->keyword, function (Builder $query) use($request) {
                                 $query->where(function (Builder $query) use($request) {
                                     $query->where('users.email', 'like', '%'.$request->keyword.'%')
@@ -272,8 +283,7 @@ class CourseController extends Controller
                             })
                             ->orderBy('course_user.score', 'DESC')
                             ->paginate($request->limit);
-        // dd($userGrades);
-        return view('admin.course.static', compact('users', 'userGrades', 'params', 'classes', 'subjects', 'semesters'));
+        return view('admin.course.static', compact('users', 'userGrades', 'params', 'classes', 'subjects', 'semesters', 'searchQueries'));
     }
 
     public function gradeCourse(Course $course)

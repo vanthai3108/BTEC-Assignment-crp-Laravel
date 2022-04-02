@@ -92,6 +92,9 @@ return [
     ],
     'block' => 'This account has been lock!',
     'course_test' => [
-        'delete_success' => 'Remove test course successfully !'
+        'delete_success' => 'Remove test course successfully!'
     ],
+    'test' => [
+        'add_success' => 'Add test to course successfully!'
+    ]
 ];

@@ -19,7 +19,15 @@
                     @csrf
                     <div class="card-body">
                         <div class="mb-3">
-                            <a class="btn btn-primary" href="{{route('admin.courses.show', $course->id)}}">Go Back</a>
+                            {{-- <a class="btn btn-primary" href="{{route('admin.courses.show', $course->id)}}">Go Back</a> --}}
+                            <div class="mb-3 row justify-content-center">
+                                <div class="col-6">
+                                    <a class="btn btn-primary m-0" href="{{route('admin.courses.show', $course->id)}}">Go Back</a>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <a href="{{route('export.course_grade', $course->id)}}">Export file</a>
+                                </div>
+                            </div>
                         </div>
                         <table class="table  table-striped projects">
                             <thead>

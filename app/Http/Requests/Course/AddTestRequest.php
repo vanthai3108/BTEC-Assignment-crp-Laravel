@@ -27,6 +27,7 @@ class AddTestRequest extends FormRequest
             'test_id' => ['required', 'exists:tests,id'],
             'course_id' => ['required', 'exists:courses,id'],
             'date' => ['required', 'date', 'after:yesterday'],
+            'question_limit' => ['required', 'integer'],
             'start_time' => ['required', 'date_format:H:i'],
             'end_time' => ['required', 'date_format:H:i', 'after:start_time'],
         ];
