@@ -19,10 +19,14 @@ class UserSeeder extends Seeder
     {
         if (config('app.env') == 'local') {
             $heSo = AppConst::HE_SO;
+            $coSo = AppConst::CO_SO;
         } else {
             $heSo = AppConst::HE_SO_PRODUCT;
+            $coSo = AppConst::CO_SO_PRODUCT;
         }
-        $roleAdmin = Role::where('name', 'trainer')->first();
+        $roleAdmin = Role::where('name', 'admin')->first();
+        $roleTrainer = Role::where('name', 'trainer')->first();
+        $roleTrainee = Role::where('name', 'trainee')->first();
         User::create([
             'email' => 'admin@fpt.edu.vn',
             'password' => Hash::make('adminadmin'),
@@ -32,15 +36,15 @@ class UserSeeder extends Seeder
             'role_id' => $roleAdmin->id,
             // 'campus_id' => 1
         ]);
-        dd($roleAdmin->id);
+        // dd($roleAdmin->id);
         User::create([
             'email' => 'cuongnt@fpt.edu.vn',
             'password' => Hash::make('adminadmin'),
             'name' => 'Nguyễn Thái Cường',
             'code' => 'cuongnt',
             'avatar' => 'storage/avatars/avatar.png',
-            'role_id' => 2*$heSo,
-            'campus_id' => 1*$heSo
+            'role_id' => $roleTrainer->id,
+            'campus_id' => 1*$heSo + $coSo
         ]);
         User::create([
             'email' => 'loanmtm@fpt.edu.vn',
@@ -48,8 +52,8 @@ class UserSeeder extends Seeder
             'name' => 'Ngô Thị Mai Loan',
             'code' => 'loanmtm',
             'avatar' => 'storage/avatars/avatar.png',
-            'role_id' => 2*$heSo,
-            'campus_id' => 1*$heSo
+            'role_id' => $roleTrainer->id,
+            'campus_id' => 1*$heSo + $coSo
         ]);
         User::create([
             'email' => 'thuanlv@fpt.edu.vn',
@@ -57,8 +61,8 @@ class UserSeeder extends Seeder
             'name' => 'Lê Văn Thuận',
             'code' => 'luanlv',
             'avatar' => 'storage/avatars/avatar.png',
-            'role_id' => 2*$heSo,
-            'campus_id' => 1*$heSo
+            'role_id' => $roleTrainer->id,
+            'campus_id' => 1*$heSo + $coSo
         ]);
         User::create([
             'email' => 'nganntp@fpt.edu.vn',
@@ -67,8 +71,8 @@ class UserSeeder extends Seeder
             'code' => 'nganntp',
             'avatar' => 'storage/avatars/avatar.png',
             'status' => 0,
-            'role_id' => 2*$heSo,
-            'campus_id' => 1*$heSo
+            'role_id' => $roleTrainer->id,
+            'campus_id' => 1*$heSo + $coSo
         ]);
         User::create([
             'email' => 'thanhtx@fpt.edu.vn',
@@ -76,8 +80,8 @@ class UserSeeder extends Seeder
             'name' => 'Trần Xuân Thanh',
             'code' => 'thanhtx',
             'avatar' => 'storage/avatars/avatar.png',
-            'role_id' => 2*$heSo,
-            'campus_id' => 1*$heSo
+            'role_id' => $roleTrainer->id,
+            'campus_id' => 1*$heSo + $coSo
         ]);
         User::create([
             'email' => 'thaimv@fpt.edu.vn',
@@ -85,8 +89,8 @@ class UserSeeder extends Seeder
             'name' => 'Mai Văn Thái',
             'code' => 'thaimv',
             'avatar' => 'storage/avatars/avatar.png',
-            'role_id' => 3*$heSo,
-            'campus_id' => 1*$heSo
+            'role_id' => $roleTrainee->id,
+            'campus_id' => 1*$heSo + $coSo
         ]);
         User::create([
             'email' => 'thanhhm@fpt.edu.vn',
@@ -94,8 +98,8 @@ class UserSeeder extends Seeder
             'name' => 'Hoàng Minh Thành',
             'code' => 'thanhhm',
             'avatar' => 'storage/avatars/avatar.png',
-            'role_id' => 3*$heSo,
-            'campus_id' => 1*$heSo
+            'role_id' => $roleTrainee->id,
+            'campus_id' => 1*$heSo + $coSo
         ]);
         User::create([
             'email' => 'hungdt@fpt.edu.vn',
@@ -103,8 +107,8 @@ class UserSeeder extends Seeder
             'name' => 'Đào Tuấn Hùng',
             'code' => 'hungdt',
             'avatar' => 'storage/avatars/hung.jpg',
-            'role_id' => 3*$heSo,
-            'campus_id' => 1*$heSo
+            'role_id' => $roleTrainee->id,
+            'campus_id' => 1*$heSo + $coSo
         ]);
         User::create([
             'email' => 'tudm@fpt.edu.vn',
@@ -112,8 +116,8 @@ class UserSeeder extends Seeder
             'name' => 'Dương Minh Tú',
             'code' => 'tudm',
             'avatar' => 'storage/avatars/avatar.png',
-            'role_id' => 3*$heSo,
-            'campus_id' => 1*$heSo
+            'role_id' => $roleTrainee->id,
+            'campus_id' => 1*$heSo + $coSo
         ]);
         User::create([
             'email' => 'huyennt@fpt.edu.vn',
@@ -121,9 +125,9 @@ class UserSeeder extends Seeder
             'name' => 'Nguyễn Thị Huyền',
             'code' => 'huyennt',
             'avatar' => 'storage/avatars/avatar.png',
-            'role_id' => 3*$heSo,
+            'role_id' => $roleTrainee->id,
             'status' => 0,
-            'campus_id' => 1*$heSo
+            'campus_id' => 1*$heSo + $coSo
         ]);
         User::create([
             'email' => 'huyna@fpt.edu.vn',
@@ -131,8 +135,8 @@ class UserSeeder extends Seeder
             'name' => 'Nguyễn Anh Huy',
             'code' => 'huyna',
             'avatar' => 'storage/avatars/avatar.png',
-            'role_id' => 3*$heSo,
-            'campus_id' => 2*$heSo
+            'role_id' => $roleTrainee->id,
+            'campus_id' => 2*$heSo + $coSo
         ]);
         User::create([
             'email' => 'tungtt@fpt.edu.vn',
@@ -140,8 +144,8 @@ class UserSeeder extends Seeder
             'name' => 'Trần Thanh Tùng',
             'code' => 'tungtt',
             'avatar' => 'storage/avatars/avatar.png',
-            'role_id' => 3*$heSo,
-            'campus_id' => 1*$heSo
+            'role_id' => $roleTrainee->id,
+            'campus_id' => 1*$heSo + $coSo
         ]);
         User::create([
             'email' => 'hungpv@fpt.edu.vn',
@@ -149,9 +153,9 @@ class UserSeeder extends Seeder
             'name' => 'Phạm Văn Hùng',
             'code' => 'hungpv',
             'avatar' => 'storage/avatars/avatar.png',
-            'role_id' => 3*$heSo,
+            'role_id' => $roleTrainee->id,
             'status' => 0,
-            'campus_id' => 3*$heSo
+            'campus_id' => 3*$heSo + $coSo
         ]);
         User::create([
             'email' => 'baolt@fpt.edu.vn',
@@ -159,8 +163,8 @@ class UserSeeder extends Seeder
             'name' => 'Lê Thái Bảo',
             'code' => 'baont',
             'avatar' => 'storage/avatars/avatar.png',
-            'role_id' => 3*$heSo,
-            'campus_id' => 1*$heSo
+            'role_id' => $roleTrainee->id,
+            'campus_id' => 1*$heSo + $coSo
         ]);
         User::create([
             'email' => 'datpt@fpt.edu.vn',
@@ -168,8 +172,8 @@ class UserSeeder extends Seeder
             'name' => 'Phạm Thành Đạt',
             'code' => 'datpt',
             'avatar' => 'storage/avatars/avatar.png',
-            'role_id' => 3*$heSo,
-            'campus_id' => 2*$heSo
+            'role_id' => $roleTrainee->id,
+            'campus_id' => 2*$heSo + $coSo
         ]);
         User::create([
             'email' => 'minhvt@fpt.edu.vn',
@@ -177,9 +181,9 @@ class UserSeeder extends Seeder
             'name' => 'Vương Thành Minh',
             'code' => 'minhvt',
             'avatar' => 'storage/avatars/avatar.png',
-            'role_id' => 3*$heSo,
+            'role_id' => $roleTrainee->id,
             'status' => 0,
-            'campus_id' => 4*$heSo
+            'campus_id' => 4*$heSo + $coSo
         ]);
         
     }
