@@ -56,7 +56,7 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                @if (Auth::user()->role_id == 1)
+                                @if (Auth::user()->role->name == 'admin')
                                     <a class="dropdown-item" href="{{ route('admin.index') }}">
                                         Admin page
                                     </a>
