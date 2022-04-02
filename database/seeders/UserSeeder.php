@@ -22,7 +22,6 @@ class UserSeeder extends Seeder
         } else {
             $heSo = AppConst::HE_SO_PRODUCT;
         }
-        dd($roleAdmin->id);
         $roleAdmin = Role::where('name', 'admin')->first();
         User::create([
             'email' => 'admin@fpt.edu.vn',
@@ -33,6 +32,7 @@ class UserSeeder extends Seeder
             'role_id' => $roleAdmin->id,
             // 'campus_id' => 1
         ]);
+        dd($roleAdmin->id);
         User::create([
             'email' => 'cuongnt@fpt.edu.vn',
             'password' => Hash::make('adminadmin'),
