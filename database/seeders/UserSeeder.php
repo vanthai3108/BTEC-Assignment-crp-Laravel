@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\AppConst;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -21,13 +22,14 @@ class UserSeeder extends Seeder
         } else {
             $heSo = AppConst::HE_SO_PRODUCT;
         }
+        $roleAdmin = Role::where('name', 'admin')->first();
         User::create([
             'email' => 'admin@fpt.edu.vn',
             'password' => Hash::make('adminadmin'),
             'name' => 'Admin',
             'code' => 'admin',
             'avatar' => 'storage/avatars/hung.jpg',
-            'role_id' => 1*$heSo,
+            'role_id' => $roleAdmin,
             // 'campus_id' => 1
         ]);
         User::create([
