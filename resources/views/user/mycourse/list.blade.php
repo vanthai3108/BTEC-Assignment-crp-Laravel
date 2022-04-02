@@ -22,7 +22,7 @@
                         <th class="text-center">Class</th>
                         <th class="text-center">Subject</th>
                         <th class="text-center">Semester</th>
-                        @if(Auth::user()->role_id == 3)
+                        @if(Auth::user()->role->name=='trainee')
                             <th class="text-center">Trainer</th>
                             <th class="text-center">Score</th>
                         @endif
@@ -64,7 +64,7 @@
                                     @endforeach
                                 </td>
                             @endif
-                            @if(Auth::user()->role_id == 2)
+                            @if(Auth::user()->role->name=='trainer')
                                 @if ($course->status)
                                     <td class="align-middle text-center">
                                         <span class="right badge badge-success">Active</span>

@@ -24,7 +24,7 @@
                         <th class="text-center">Subject</th>
                         <th class="text-center">Shift</th>
                         <th class="text-center">Location</th>
-                        @if (Auth::user()->id == 2)
+                        @if (Auth::user()->role->name=='trainer')
                             <th colspan="3" class="text-center">Action</th>
                         @endif
                     </tr>
@@ -41,7 +41,7 @@
                             <td class="align-middle text-center">{{ $schedule->course->subject->name }}</td>
                             <td class="align-middle text-center">{{ $schedule->shift->name }}({{ $schedule->shift->start_time }} - {{ $schedule->shift->end_time }})</td>
                             <td class="align-middle text-center">{{ $schedule->location->room }} - {{ $schedule->location->building }}</td>
-                            @if (Auth::user()->id == 2 && now()->format('Y-m-d') === $schedule->date)
+                            @if (Auth::user()->role->name=='trainer' && now()->format('Y-m-d') === $schedule->date)
                                 @if ($attendanceStatus == 0)
                                     <td class="align-middle text-center">
                                         <a href="{{ route('my_schedule.attendance', $schedule->id) }}">Take attendance</a>
@@ -51,7 +51,7 @@
                                         <a href="{{ route('my_schedule.attendance_edit', $schedule->id) }}">Edit</a>
                                     </td>
                                 @endif
-                            @elseif(Auth::user()->id == 2)
+                            @elseif(Auth::user()->role->name=='trainer')
                                 <td class="align-middle text-center"><a>-</a></td>
                             @endif
                             {{-- <td class="align-middle text-center">{{ $schedule->semester->name }}</td> --}}
