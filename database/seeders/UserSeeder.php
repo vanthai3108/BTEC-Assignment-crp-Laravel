@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
         } else {
             $heSo = AppConst::HE_SO_PRODUCT;
         }
+        dd($roleAdmin->id);
         $roleAdmin = Role::where('name', 'admin')->first();
         User::create([
             'email' => 'admin@fpt.edu.vn',
