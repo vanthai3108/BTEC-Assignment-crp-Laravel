@@ -37,7 +37,7 @@
                             <td class="align-middle text-center">{{ $course->class->name }}</td>
                             <td class="align-middle">{{ $course->subject->name }}</td>
                             <td class="align-middle text-center">{{ $course->semester->name }}</td>
-                            @if(Auth::user()->role_id == 3)
+                            @if(Auth::user()->role->name=='trainee')
                                 <td class="align-middle">{{ $course->trainer->name }}</td>
                                 <td class="align-middle text-center">
                                     @foreach ($course->users as $user)

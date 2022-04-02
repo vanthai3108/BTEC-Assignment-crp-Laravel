@@ -88,7 +88,7 @@
                                         'test_course_id' => $test->id
                                     ])->count();
                                     @endphp
-                                    @if($test->date == now()->format('Y-m-d') && now()->format('H:i:s') <= $test->end_time && now()->format('H:i:s') >= $test->start_time && Auth::user()->role_id==3)
+                                    @if($test->date == now()->format('Y-m-d') && now()->format('H:i:s') <= $test->end_time && now()->format('H:i:s') >= $test->start_time && Auth::user()->role->name=='trainee')
                                         <td class="align-middle text-center text-success">
                                             @if($check > 0)
                                                 <a href="{{ route('my_course.course_test_result', $test->id)}}">View result</a>
@@ -96,11 +96,11 @@
                                                 <a href="{{ route('my_course.course_test', $test->id)}}">Take the test</a>
                                             @endif
                                         </td>
-                                    @elseif(($test->date > now()->format('Y-m-d') || ($test->date == now()->format('Y-m-d') && now()->format('H:i:s') <= $test->end_time && now()->format('H:i:s') <= $test->start_time)) && Auth::user()->role_id==2)
+                                    @elseif(($test->date > now()->format('Y-m-d') || ($test->date == now()->format('Y-m-d') && now()->format('H:i:s') <= $test->end_time && now()->format('H:i:s') <= $test->start_time)) && Auth::user()->role->name=='trainer')
                                         <td class="align-middle text-center text-primary">
                                             <a href="{{ route('my_course.course_test_delete', $test->id)}}">Delete</a>
                                         </td>
-                                    @elseif(($test->date < now()->format('Y-m-d') || ($test->date == now()->format('Y-m-d') && now()->format('H:i:s') > $test->start_time)) && Auth::user()->role_id==2)
+                                    @elseif(($test->date < now()->format('Y-m-d') || ($test->date == now()->format('Y-m-d') && now()->format('H:i:s') > $test->start_time)) && Auth::user()->role->name=='trainer')
                                         <td class="align-middle text-center text-primary">
                                             <a href="{{ route('my_course.course_test_result', $test->id)}}">View result</a>
                                         </td>
@@ -123,7 +123,7 @@
                 @endif
                 </div>
             </div>
-            @if(Auth::user()->id == 2)
+            @if(Auth::user()->role->name=='trainer')
             <div class="card">
                 <div class="card-header bg-info">
                     <h3 class="card-title"><i class="fas fa-fw fa-lg fa-calendar-check"></i> Attendance history
@@ -182,7 +182,7 @@
                 </div>
             </div>
             @endif
-            @if(Auth::user()->id != 2)
+            @if(Auth::user()->role->name!='trainer')
             <div class="card">
                 <div class="card-header bg-info">
                     <h3 class="card-title"><i class="fas fa-fw fa-lg fa-calendar-check"></i> Attendance history
