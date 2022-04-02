@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             'name' => 'Admin',
             'code' => 'admin',
             'avatar' => 'storage/avatars/hung.jpg',
-            'role_id' => $roleAdmin,
+            'role_id' => $roleAdmin->id,
             // 'campus_id' => 1
         ]);
         User::create([
