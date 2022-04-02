@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="card-body" style="display: block;">
-                    @if(Auth::user()->->role->name=='trainer')
+                    @if(Auth::user()->role->name=='trainer')
                         <div class="card-header bg-white">
                             <h3 class="card-title text-center">
                                 <a href="{{ route('my_course.add_test_view', $course->id) }}" class="text-success">
