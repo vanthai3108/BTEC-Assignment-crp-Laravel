@@ -12,4 +12,6 @@ class AppConst extends Model
     const ROLE_TRAINEE = 3;
     const PASS = 50;
     const ACTIVE = 1;
+    const HE_SO = 1;
+    const HE_SO_PRODUCT = 5;
 }

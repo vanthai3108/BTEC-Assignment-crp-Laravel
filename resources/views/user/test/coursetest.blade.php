@@ -24,13 +24,19 @@ Course | Test
                     <div class="card-body">
                         <input type="hidden" value="{{$courseTest->test_id}}" name="test_id">
                         @foreach($questions as $question)
-                            @php $question['content'] = json_decode($question['content']) @endphp
+                            @php 
+                                $question['content'] = json_decode($question['content']);
+                                shuffle($question->content->answers);
+                            @endphp
                             <div class="form-group">
                                 <label>Quesstion {{ $loop->iteration++ }}: {{ $question->content->title }}</label>
+                                @php
+                                $arr = range('A', 'Z');
+                                @endphp
                                 @for($i = 0; $i < count($question->content->answers); $i++)
                                 <div class="custom-control custom-radio">
                                     <input class="custom-control-input" value="{{$question->content->answers[$i]}}" type="radio" name="question-{{$question->id}}" id="question-{{$question->id}}-{{$i}}">
-                                    <label class="custom-control-label" style="font-weight:500" for="question-{{$question->id}}-{{$i}}">{{$i+1}}. {{ $question->content->answers[$i] }}</label>
+                                    <label class="custom-control-label" style="font-weight:500" for="question-{{$question->id}}-{{$i}}">{{isset($arr[$i]) ? $arr[$i] : $i+1}}. {{ $question->content->answers[$i] }}</label>
                                 </div>
                                 @endfor
                             </div>

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CourseGradeExport;
 use App\Http\Requests\BaseIndexRequest;
 use App\Http\Requests\BaseScheduleRequest;
 use App\Models\AppConst;
 use App\Models\Course;
 use App\Models\CourseTest;
+use App\Models\Role;
 use App\Models\Schedule;
 use App\Models\User;
 use Carbon\Carbon;
@@ -15,6 +17,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HomeController extends Controller
 {

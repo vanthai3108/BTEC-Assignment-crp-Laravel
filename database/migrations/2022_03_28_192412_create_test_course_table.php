@@ -18,6 +18,7 @@ class CreateTestCourseTable extends Migration
             $table->foreignId('course_id')->nullable()->constrained('courses')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('test_id')->nullable()->constrained('tests')->cascadeOnUpdate()->nullOnDelete();
             $table->date('date');
+            $table->integer('question_limit');
             $table->time('start_time');
             $table->time('end_time');
             $table->timestamps();

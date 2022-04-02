@@ -73,7 +73,8 @@ class ExamController extends Controller
             && now()->format('H:i:s') >= $courseTest->start_time 
             && $userTest > 0 && $check == 0) {
                 $test = Test::where('id', $courseTest->test_id)->first();
-                $questions = Question::where('test_id', $courseTest->test_id)->get();
+                $questions = Question::where('test_id', $courseTest->test_id)->inRandomOrder()
+                ->limit($courseTest->question_limit)->get();
             return view('user.test.coursetest', compact('courseTest', 'test', 'questions'));
         }
         abort(404);
@@ -103,9 +104,13 @@ class ExamController extends Controller
                 $index++;
             }
         }
+        $totalLimit = $courseTest->question_limit;
         $totalQuestion = Question::where('test_id', $courseTest->test_id)->count();
+        if ($totalLimit < $totalQuestion) {
+            $totalQuestion = $totalLimit;
+        }
         // dd($totalQuestion)
-        $result = $count."/".$totalQuestion;
+        $result = $count."/".$totalQuestion." (".round($count/$totalQuestion, 2)*100 ."%)";
         $user =  User::where('id', $userId)->first();
         $user->courseTest()->attach([
             $courseTestId => ['exam' => json_encode($exam), 'submit' => json_encode($submit), 'result' => $result]

@@ -38,11 +38,21 @@ Course | Add test
                         </div>
                         <div class="form-group">
                             <label for="date">Date:</label>
-                            <input type="date" id="datemul" class="form-control {{ $errors->has('date') ? 'is-invalid' : '' }}" 
+                            <input type="date" class="form-control {{ $errors->has('date') ? 'is-invalid' : '' }}" 
                                 id="date" name="date" value="{{ old('date', date('Y-m-d')) }}" multiple>
                             @if ($errors->has('date'))
                                 <div class="invalid-feedback">
                                     <strong>{{ $errors->first('date') }}</strong>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="limit">Number of questions:</label>
+                            <input type="number" min="0" id="limit" class="form-control {{ $errors->has('question_limit') ? 'is-invalid' : '' }}" 
+                                name="question_limit" value="{{ old('question_limit') }}" multiple>
+                            @if ($errors->has('question_limit'))
+                                <div class="invalid-feedback">
+                                    <strong>{{ $errors->first('question_limit') }}</strong>
                                 </div>
                             @endif
                         </div>

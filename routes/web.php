@@ -60,7 +60,6 @@ Route::group(['middleware' => ['auth', 'block', 'role:trainer']], function(){
     Route::get('/my_course/{course}/add_test', 'ExamController@create')->name('my_course.add_test_view');
     Route::post('/my_course/add_test', 'ExamController@store')->name('my_course.add_test');
     Route::resource('/tests', 'TestController', ['except' => ['index']]);
-    
 });
 
 Route::group(['middleware' => ['auth', 'block']], function(){
@@ -78,5 +77,9 @@ Route::group(['middleware' => ['auth', 'block']], function(){
     Route::post('profile/update_avatar', 'ProfileController@updateAvatar')->name('profile.update_avatar');
     Route::resource('profile', 'ProfileController');
     Route::get('{user}/info', 'ProfileController@info')->name('info');
+});
+Route::group(['middleware' => ['auth', 'block', 'role:admin']], function(){
+    Route::get('export/course_grade/{course}', 'ExportDataController@exportGrades')->name('export.course_grade')->middleware(['role:trainer']);
+    Route::get('export/static_grade', 'ExportDataController@exportStaticGrades')->name('export.static_grade');
 });
 
