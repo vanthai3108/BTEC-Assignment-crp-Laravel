@@ -148,9 +148,8 @@ class ProfileController extends Controller
     {
         $userId = Auth::user()->id;
         $user = User::where('id', $userId)->first();
-        $request->file('avatar')->store('public/avatars');
+        $request->file('avatar')->store('avatars');
         $filename = $request->file('avatar')->hashName();
-        // $user->password = Hash::make($request->password);
         $user->avatar = 'storage/avatars/'.$filename;
         $user->save();
         return redirect()->route('profile.index')
