@@ -6,6 +6,7 @@ use App\Http\Requests\BaseIndexRequest;
 use App\Http\Requests\Profile\StoreRequest;
 use App\Http\Requests\Profile\UpdateAvatarRequest;
 use App\Http\Requests\Profile\UpdatePasswordRequest;
+use App\Http\Requests\Profile\UpdateRequest;
 use App\Models\AppConst;
 use App\Models\Course;
 use App\Models\Profile;
@@ -105,7 +106,7 @@ class ProfileController extends Controller
      * @param  \App\Models\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Profile $profile)
+    public function update(UpdateRequest $request, Profile $profile)
     {
         if ($profile->user_id == Auth::user()->id) {
             $data = $request->all();
