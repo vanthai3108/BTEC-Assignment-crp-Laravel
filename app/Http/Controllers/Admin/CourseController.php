@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BaseIndexRequest;
 use App\Http\Requests\Course\AddTraineeRequest;
 use App\Http\Requests\Course\StoreRequest;
+use App\Http\Requests\Course\UpdateRequest;
 use App\Http\Requests\Schedule\StoreRequest as ScheduleStoreRequest;
 use App\Http\Requests\StaticRequest;
 use App\Models\AppConst;
@@ -154,7 +155,7 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(UpdateRequest $request, Course $course)
     {
         $course->fill($request->all());
         $course->save();
