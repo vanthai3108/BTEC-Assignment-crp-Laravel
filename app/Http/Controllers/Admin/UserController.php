@@ -125,6 +125,7 @@ class UserController extends Controller
     public function update(UpdateRequest $request, User $user)
     {
         $user->fill($request->all());
+        $user->password = Hash::make($request->password);
         $user->save();
         return redirect()->route('admin.users.edit', $user->id)
                 ->with('success', __('message.user.update_success'));
