@@ -80,7 +80,7 @@ class TestController extends Controller
             ->orderBy('start_time', 'DESC')
             ->orderBy('end_time', 'DESC')
             ->paginate($request->limit);
-            
+            dd($tests[0]);
             return view('user.test.trainee_list', compact('tests', 'params'));
         }
         
