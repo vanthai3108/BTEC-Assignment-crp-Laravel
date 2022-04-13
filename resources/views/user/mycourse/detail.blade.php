@@ -104,6 +104,10 @@
                                         <td class="align-middle text-center text-primary">
                                             <a href="{{ route('my_course.course_test_result', $test->id)}}">View result</a>
                                         </td>
+                                    @elseif($check > 0 && Auth::user()->role->name=='trainee')
+                                        <td class="align-middle text-center text-primary">
+                                            <a href="{{ route('my_course.course_test_result', $test->id)}}">View result</a>
+                                        </td>
                                     @else
                                     <td class="align-middle text-center text-danger">
                                         -

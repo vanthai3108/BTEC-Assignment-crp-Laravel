@@ -129,10 +129,11 @@ class ExamController extends Controller
                 'user_id' => Auth::user()->id,
                 'test_course_id' => $courseTest->id
             ])->count();
-            if ($courseTest->date == now()->format('Y-m-d') 
+            if (($courseTest->date == now()->format('Y-m-d') 
                 && now()->format('H:i:s') <= $courseTest->end_time 
                 && now()->format('H:i:s') >= $courseTest->start_time 
-                && $userTest > 0 && $check > 0 ) { 
+                && $userTest > 0 && $check > 0 ) || 
+                ($courseTest->date < now()->format('Y-m-d') && $check > 0)) { 
                     $result = DB::table('test_user')->where([
                         'user_id' => Auth::user()->id,
                         'test_course_id' => $courseTest->id
