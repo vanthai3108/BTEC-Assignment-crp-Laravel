@@ -76,7 +76,7 @@ Test list
                             <td class="text-center align-middle">{{ ($tests->currentPage() - 1)  * $tests->perpage() + $loop->iteration }}</td>
                             <td class="align-middle text-center">{{ $test->test->name }}</td>
                             <td class="align-middle text-center">
-                                @if($test->course->class && $test->course->subject)
+                                @if($test->course)
                                 {{ $test->course->class->name }} - {{ $test->course->subject->name }}
                                 @endif
                             </td>
